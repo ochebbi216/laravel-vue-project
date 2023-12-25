@@ -7,52 +7,51 @@ use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $rooms = Room::all();
         return response()->json($rooms);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
-{
-    
-    $room = new Room($request->only(['room_number', 'room_type', 'disponible', 'image', 'description']));
+    {
+        // (Implement validation logic)
 
-    $room->save(); // Save the room with the image if provided
+        $room = new Room($request->only(['room_number', 'room_type', 'image', 'description']));
 
-    // Return the room data with a 201 Created status
-    return response()->json($room, 201);
-}
-    /**
-     * Display the specified resource.
-     */
+        // Check room availability
+        if (!$room->isAvailable($request->checkin, $request->checkout)) {
+            return response()->json(['message' => 'Room is not available for the selected dates'], 409);
+        }
+
+        $room->save();
+        return response()->json($room, 201);
+    }
+
     public function show($id)
     {
-        $room = Room::find($id);
+        $room = Room::findOrFail($id);
         return response()->json($room);
     }
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, $id)
     {
-        $room = Room::find($id);
+        $room = Room::findOrFail($id);
+        
+        // ... Validation logic ...
+
+        // Check room availability
+        if (!$room->isAvailable($request->checkin, $request->checkout)) {
+            return response()->json(['message' => 'Room is not available for the selected dates'], 409);
+        }
+
         $room->update($request->all());
         return response()->json($room, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
-        $room = Room::find($id);
+        $room = Room::findOrFail($id);
         $room->delete();
         return response()->json(null, 204);
     }

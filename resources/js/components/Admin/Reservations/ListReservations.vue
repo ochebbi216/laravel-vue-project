@@ -29,13 +29,14 @@
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Customer</th>
-                                                <th>Room Number</th>
+                                                <th>N°Room</th>
                                                 <th>Check In</th>
                                                 <th>Check Out</th>
-                                                <th>Total Numbers</th>
-                                                <th >Status</th>
-                                                <th>Type</th>
-                                                <th>Payment</th>
+                                                <th>N°Adult</th>
+                                                <th>N°Children</th>
+                                                <th>Status</th>
+                                                <th>Room</th>
+                                                <th>Cost</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -47,9 +48,10 @@
                                                 <td>{{ reservation.id }}</td>
                                                 <td>{{ reservation.user?.name }}</td>
                                                 <td>{{ reservation.room?.room_number }}</td>
-                                                <td>{{ reservation.check_in }}</td>
-                                                <td>{{ reservation.check_out }}</td>
-                                                <td>{{ reservation.total_numbers }}</td>
+                                                <td>{{ reservation.checkin }}</td>
+                                                <td>{{ reservation.checkout }}</td>
+                                                <td>{{ reservation.nbadulte }}</td>
+                                                <td>{{ reservation.nbenfants }}</td>
                                                 <td> 
                                                     <select v-if="canDeleteReservation(reservation)" class="form-control" style="width:max-content" v-model="reservation.status">
                                                         <option :value="reservation.status" :disabled="true"> {{
@@ -61,8 +63,9 @@
                                                     </select>
                                                     <span v-else>{{reservation.status }}</span>
                                                 </td>
-                                                <td>{{ reservation.type }}</td>
-                                                <td>{{ reservation.payment }}</td>
+                                                <td>{{ reservation.room_type }}</td>
+                                                <td>{{ reservation.pension }}</td>
+                                                <td>{{ reservation.total_cost }} DT</td>
                                                 <td>
                                                     <button v-if="canDeleteReservation(reservation)"
                                                         @click="deleteReservation(reservation.id)"
@@ -154,9 +157,11 @@ const saveReservation = async (reservation) => {
         })
         .catch(error => {
             console.error('Error while updating the reservation status:', error);
+            if (error.response && error.response.data) {
+                console.error('Validation errors:', error.response.data.errors);
+            }
             // Reverting state in case of failure
             reservation.status = originalStatus;
         });
 };
-
 </script>

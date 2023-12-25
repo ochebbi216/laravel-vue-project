@@ -12,7 +12,6 @@ class CreateRoomsTable extends Migration
             $table->id();
             $table->integer('room_number')->unique();
             $table->enum('room_type', ['Single', 'Double', 'Triple','Suite']);
-            $table->boolean('disponible')->default(true); // Assuming rooms are available by default.
             $table->string('image')->nullable(); // The path to the room's image, nullable if no image is set.
             $table->text('description')->nullable(); // A description for the room, which is optional.
             $table->timestamps();

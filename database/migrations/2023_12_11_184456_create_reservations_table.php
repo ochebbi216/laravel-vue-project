@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -8,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CreateReservationsTable extends Migration
 {
     /**
-     * Run the migrations.
+     * Exécutez les migrations.
      *
      * @return void
      */
@@ -17,19 +16,17 @@ class CreateReservationsTable extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_room');
-            $table->unsignedBigInteger('id_user');
-            $table->date('check_in');
-            $table->date('check_out');
-            $table->integer('number_adults'); // Number of adults
-            $table->integer('number_children'); // Number of children
+            $table->unsignedBigInteger('id_user'); 
+            $table->date('checkin');
+            $table->date('checkout');
+            $table->unsignedInteger('nbadulte');
+            $table->unsignedInteger('nbenfants');
             $table->string('status')->default('en attente');
-            $table->enum('type', ['demi-pension', 'pension-compléte', 'Lpd', 'tout inclus']);
-            $table->decimal('price_adult', 8, 2); // Price per adult
-            $table->decimal('price_child', 8, 2); // Price per child
+            $table->string('room_type'); // Assurez-vous que cela correspond à la typologie des chambres dans la table `rooms`
+            $table->string('pension');
+            $table->decimal('total_cost', 10, 2); // La précision et l'échelle peuvent être ajustées selon vos besoins
             $table->timestamps();
             $table->softDeletes();
-
-            // Foreign key constraints
             $table->foreign('id_room')->references('id')->on('rooms')
                   ->onDelete('restrict')
                   ->onUpdate('cascade');
@@ -40,13 +37,12 @@ class CreateReservationsTable extends Migration
     }
 
     /**
-     * Reverse the migrations.
+     * Inversez les migrations.
      *
      * @return void
      */
     public function down()
     {
-        // Drop the reservations table
         Schema::dropIfExists('reservations');
     }
 }

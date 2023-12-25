@@ -42,8 +42,8 @@
                       <td>{{ room.room_type }}</td>
                       <td>{{ room.description }}</td>
                       <td>
-                        <span v-if="!room.disponible" class="badge bg-danger" style="color: aliceblue;">No</span>
-                        <span v-else class="badge " style="background-color: rgb(1, 177, 1);color: aliceblue;">Yes</span>
+                        <span v-if="isAvailable(room.id)" class="badge" style="background-color: rgb(1, 177, 1); color: aliceblue;">Yes</span>
+                        <span v-else class="badge bg-danger" style="color: aliceblue;">No</span>
                       </td>
                       <!-- Boutons pour éditer et supprimer la chambre correspondante -->
                       <td><button class="btn btn-outline-warning mx-2" @click="editRoom(room.id)"><i
@@ -72,6 +72,7 @@ import axios from 'axios';
 const isLoading = ref(true)
 
 const rooms = ref([]);
+const reservations = ref([]);
 const router = useRouter();
 
 const getRooms = async () => {
@@ -85,11 +86,31 @@ const getRooms = async () => {
       console.log(error);
     });
 };
+const fetchReservations = async () => {
+    await axios.get('http://localhost:8000/api/reservations')
+        .then(res => {
+            reservations.value = res.data;
+        })
+        .catch(error => {
+            console.error('Error fetching reservations:', error);
+        })
+}; 
 
 onMounted(() => {
   getRooms();
+  fetchReservations();
 });
-
+const isAvailable = (roomId) => {
+  const currentDate = new Date();
+  // Look for a reservation that overlaps with the current date for the given room ID
+  const roomUnavailable = reservations.value.some((reservation) => {
+    return reservation.id_room === roomId &&
+           new Date(reservation.checkin) <= currentDate &&
+           currentDate <= new Date(reservation.checkout);
+  });
+  // If there's no overlapping reservation, the room is available
+  return !roomUnavailable;
+};
 const editRoom = (id) => {
   router.push({ name: 'editroom', params: { id } });
 };
