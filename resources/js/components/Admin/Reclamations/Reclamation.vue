@@ -1,4 +1,5 @@
 <template>
+        <Header></Header>
     <div>
         <div v-if="isLoading" class="d-flex justify-content-center align-items-center" style="height: 100vh;">
             <div class=" spinner-border " style="color: rgb(0, 150, 136);"></div>
@@ -63,9 +64,11 @@
 </template>
 
 <script setup>
+
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import Header from "../../../layouts/Header.vue";
 const router = useRouter();
 
 const isLoading = ref(true)
@@ -105,4 +108,6 @@ onMounted(() => {
 });
 </script>
 
-<style lang="css" scoped></style>
+<style scoped>
+
+</style>

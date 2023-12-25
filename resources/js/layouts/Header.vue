@@ -137,6 +137,14 @@
 </template>
 
 <script setup>
+import '../../../public/assets/js/jquery-3.5.1.min.js';
+// import '../../../public/assets/js/popper.min.js';
+// import '../../../public/assets/js/bootstrap.min.js';
+import '../../../public/assets/plugins/slimscroll/jquery.slimscroll.min.js';
+import '../../../public/assets/plugins/raphael/raphael.min.js';
+import '../../../public/assets/plugins/morris/morris.min.js';
+import '../../../public/assets/js/chart.morris.js';
+import '../../../public/assets/js/script.js';
 import { ref,onMounted } from 'vue';
 import axios from 'axios';
 
@@ -157,4 +165,12 @@ onMounted(() => {
 });
 </script>
 
-<style lang="css" scoped></style>
+<style >
+@import "../../../public/assets/css/bootstrap.min.css";
+@import "../../../public/assets/css/style.css"; 
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css";
+@import "../../../public/assets/plugins/fontawesome/css/fontawesome.min.css";
+@import "../../../public/assets/plugins/fontawesome/css/all.min.css";
+@import "../../../public/assets/css/feathericon.min.css";
+@import "../../../public/assets/plugins/morris/morris.css"; 
+</style>

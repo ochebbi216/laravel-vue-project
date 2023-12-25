@@ -1,4 +1,5 @@
 <template>
+      <Header></Header>
     <div>
         <div v-if="isLoading" class="d-flex justify-content-center align-items-center" style="height: 100vh;">
             <div class=" spinner-border " style="color: rgb(0, 150, 136);"></div>
@@ -40,7 +41,7 @@
                       <td><img :src="room.image" width="100" height="80" /> </td>
                       <td>{{ room.room_number }}</td>
                       <td>{{ room.room_type }}</td>
-                      <td>{{ room.description }}</td>
+                      <td>{{ room.description.slice(0, 15) }}</td>
                       <td>
                         <span v-if="isAvailable(room.id)" class="badge" style="background-color: rgb(1, 177, 1); color: aliceblue;">Yes</span>
                         <span v-else class="badge bg-danger" style="color: aliceblue;">No</span>
@@ -69,6 +70,8 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+import Header from "../../../layouts/Header.vue";
+
 const isLoading = ref(true)
 
 const rooms = ref([]);

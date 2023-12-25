@@ -10,7 +10,7 @@ import DetaisReclamation from'./components/Admin/Reclamations/DetailsReclamation
 export const routes = [
     {
         name: 'accueil',
-        path: '/accueil',
+        path: '/',
         component: Accueil
     },
     {

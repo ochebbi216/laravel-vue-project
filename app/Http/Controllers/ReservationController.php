@@ -23,22 +23,22 @@ class ReservationController extends Controller
     /**
      * Store a newly created reservation in storage.
      */
-    public function isAvailable($checkin, $checkout,$id_room)
+    public function isAvailable($checkin, $checkout)
     {
-        $reservation = Reservation::find($id_room);
             // Convert to Carbon instances to use Carbon's comparison methods
         $checkinDate = Carbon::parse($checkin);
         $checkoutDate = Carbon::parse($checkout);
 
         // Current date and time
         $currentDate = Carbon::now();
-        if($reservation && $checkinDate<$currentDate && $currentDate<$checkoutDate){
+        if( $checkinDate<$currentDate && $currentDate<$checkoutDate){
             return false;
         }
         else {
             return true;
         }
     }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -48,34 +48,48 @@ class ReservationController extends Controller
             'checkout' => 'required|date|after:checkin',
             'nbadulte' => 'required|integer:1',
             'nbenfants' => 'required|integer:0',
-            'room_type' => 'required|in:Single,Double,Triple,Suite',
             'pension' => 'required|in:demi-pension,pension-complete,lpd,all-inclusive',
         ]);
-
+    
         DB::beginTransaction();
-
+        
         try {
-            $isAvailable = $this->isAvailable($validatedData['checkin'],$validatedData['checkout'],$validatedData['id_room']);
-            if (!$isAvailable) {
+            $room = Room::findOrFail($validatedData['id_room']);
+
+            if (!$room->isAvailable($validatedData['checkin'], $validatedData['checkout'])) {
+                DB::rollback();
                 return response()->json(['message' => 'Room is not available'], 400);
             }
-
+            $capacity = ['Single'=>1,'Double'=>2,'Triple'=>3];
+            if ($room->room_type == "Suite" && $validatedData['nbenfants']+$validatedData['nbadulte']<=5){
+            }
+            else if($validatedData['nbenfants']+$validatedData['nbadulte']<=$capacity[$room->room_type]){   
+            }
+            else{
+                return response()->json(['message' => 'Room capacity not match with Guest number'], 400);
+            }
             $reservation = new Reservation($validatedData);
-            $reservation->total_cost = $this->calculateTotalCost($request);
+            $reservation->room_type = $room->room_type;
+            $totalCost = $this->calculateTotalCost($request,$room->room_type);
+            $reservation->total_cost = $totalCost;
             $reservation->save();
-
+    
             DB::commit();
-
+    
             return response()->json(['message' => 'Reservation created successfully', 'reservation' => $reservation], 201);
         } catch (ModelNotFoundException $e) {
             DB::rollback();
-            return response()->json(['message' => 'Room not found with provided ID', 'error' => $e->getMessage()], 404);
+            return response()->json(['message' => 'Room not found', 'error' => $e->getMessage()], 404);
         } catch (\Exception $e) {
             DB::rollback();
+            \Log::error("An error occurred while creating reservation: " . $e->getMessage(), [
+                'stack' => $e->getTraceAsString(),
+                'request' => $request->all(),
+                'validatedData' => $validatedData
+            ]);
             return response()->json(['message' => 'Failed to create reservation', 'error' => $e->getMessage()], 500);
         }
     }
-
     /**
      * Display the specified reservation.
      */
@@ -129,11 +143,12 @@ class ReservationController extends Controller
     public function update(Request $request, $id)
     {
         $reservation = Reservation::find($id);
-        
+        // $room = Room::findOrFail($validatedData['id_room']);
+
         // Directly update the reservation with all request data without validation
         if ($reservation) {
             $reservation->update($request->all());
-            $reservation->total_cost = $this->calculateTotalCost($request);
+            // $reservation->total_cost = $this->calculateTotalCost($request,$room->room_type);
 
             return response()->json($reservation, 200);
         }
@@ -157,7 +172,7 @@ class ReservationController extends Controller
     /**
      * Calculate the total cost of a reservation.
      */
-    private function calculateTotalCost(Request $request)
+    private function calculateTotalCost(Request $request ,$type)
     {
         // Dummy implementation - replace with your actual cost calculation logic
         $dailyRates = [
@@ -191,7 +206,7 @@ class ReservationController extends Controller
         $checkIn = Carbon::parse($request->checkin);
         $checkOut = Carbon::parse($request->checkout);
         $duration = $checkIn->diffInDays($checkOut);
-        $dailyRate = $dailyRates[$request->room_type][$request->pension];
+        $dailyRate = $dailyRates[$type][$request->pension];
 
         return $duration * $dailyRate * $request->nbadulte; // Example calculation for adults; include children calculation if needed
     }

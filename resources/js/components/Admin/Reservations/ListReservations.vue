@@ -1,4 +1,5 @@
 <template>
+        <Header></Header>
     <div>
         <div v-if="isLoading" class="d-flex justify-content-center align-items-center" style="height: 100vh;">
             <div class=" spinner-border " style="color: rgb(0, 150, 136);;"></div>
@@ -91,6 +92,7 @@
 <script setup>
 import { ref,onMounted } from 'vue';
 import axios from 'axios';
+import Header from "../../../layouts/Header.vue";
 
 const isLoading = ref(true)
 const reservations = ref([]);
@@ -165,3 +167,12 @@ const saveReservation = async (reservation) => {
         });
 };
 </script>
+<style scoped>
+@import "../../../../../public/assets/css/bootstrap.min.css";
+@import "../../../../../public/assets/css/style.css"; 
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css";
+@import "../../../../../public/assets/plugins/fontawesome/css/fontawesome.min.css";
+@import "../../../../../public/assets/plugins/fontawesome/css/all.min.css";
+@import "../../../../../public/assets/css/feathericon.min.css";
+@import "../../../../../public/assets/plugins/morris/morris.css"; 
+</style>

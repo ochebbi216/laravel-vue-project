@@ -1,4 +1,5 @@
 <template>
+        <Header></Header>
     <div class="page-wrapper">
         <div class="content container-fluid">
             <div class="page-header">
@@ -34,6 +35,8 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter, useRoute } from 'vue-router';
+import Header from "../../../layouts/Header.vue";
+
 const reclamation = ref(null);
 const route = useRoute();
 const isLoading = ref(true)

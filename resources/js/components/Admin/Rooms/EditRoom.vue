@@ -1,4 +1,5 @@
 <template>
+        <Header></Header>
 <div class="main-wrapper">
     <div class="page-wrapper" style="padding-left: 20%;">
         <div class="content container-fluid">
@@ -53,6 +54,7 @@ import vueFilePond from 'vue-filepond';
 import 'filepond/dist/filepond.min.css';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+import Header from "../../../layouts/Header.vue";
 
 const FilePond = vueFilePond(FilePondPluginImagePreview);
 const myFiles = ref([]);
