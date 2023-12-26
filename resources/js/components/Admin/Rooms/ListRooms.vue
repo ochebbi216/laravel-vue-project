@@ -105,12 +105,15 @@ onMounted(() => {
 });
 const isAvailable = (roomId) => {
   const currentDate = new Date();
+  
   // Look for a reservation that overlaps with the current date for the given room ID
   const roomUnavailable = reservations.value.some((reservation) => {
+    if(reservation.deleted_at===null){
     return reservation.id_room === roomId &&
            new Date(reservation.checkin) <= currentDate &&
            currentDate <= new Date(reservation.checkout);
-  });
+  }});
+
   // If there's no overlapping reservation, the room is available
   return !roomUnavailable;
 };

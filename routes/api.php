@@ -46,5 +46,4 @@ Route::post('/reclamation', [ReclamationReservationController::class, 'store']);
 Route::get('/reclamation', [ReclamationReservationController::class, 'index']);
 Route::get('/reclamations/{id}', [ReclamationReservationController::class, 'show']);
 Route::put('/reclamations/{id}', [ReclamationReservationController::class, 'update']);
-// Route::put('/users/{id}/toggle-ban', [UserController::class, 'toggleBanUser']);
-// Route::get('/users/blacklisted', [UserController::class, 'getBlacklistedUsers']);
+Route::put('/users/{id}/toggle-ban', [UserController::class, 'toggleBanUser']);

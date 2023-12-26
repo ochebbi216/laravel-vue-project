@@ -1,4 +1,4 @@
-import Accueil from './components/Accueil.vue';
+import Dashboard from './components/Admin/Dashboard/Dashboard.vue';
 import Rooms from './components/Admin/Rooms/ListRooms.vue';
 import Reservations from './components/Admin/Reservations/ListReservations.vue';
 import AddRoom from './components/Admin/Rooms/AddRoom.vue';
@@ -9,9 +9,9 @@ import Reclamation from './components/Admin/Reclamations/Reclamation.vue';
 import DetaisReclamation from'./components/Admin/Reclamations/DetailsReclamation.vue';
 export const routes = [
     {
-        name: 'accueil',
+        name: 'dashboard',
         path: '/',
-        component: Accueil
+        component: Dashboard
     },
     {
         name: 'rooms',

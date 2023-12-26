@@ -1,15 +1,15 @@
 <template>
 	<div class="header">
 		<div class="header-left">
-			<a href="index.html" class="logo"> <img src="../../../public/assets/img/hotel_logo.png" width="50" height="70"
-					alt="logo"> <span class="logoclass">HOTEL</span> </a>
-			<a href="index.html" class="logo logo-small"> <img src="../../../public/assets/img/hotel_logo.png" alt="Logo"
+			<a href="" class="logo"> <img src="../../../public/assets/img/hotel_logo.png" width="50" height="70"
+					alt="logo"> <span class="logoclass">SAHA BEACH </span> </a>
+			<a href="" class="logo logo-small"> <img src="../../../public/assets/img/hotel_logo.png" alt="Logo"
 					width="30" height="30"> </a>
 		</div>
 		<a href="javascript:void(0);" id="toggle_btn"> <i class="fe fe-text-align-left"></i> </a>
 		<a class="mobile_btn" id="mobile_btn"> <i class="fas fa-bars"></i> </a>
 		<ul class="nav user-menu">
-			<li class="nav-item dropdown noti-dropdown">
+			<!-- <li class="nav-item dropdown noti-dropdown">
 				<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"> <i class="fe fe-bell"></i> <span
 						class="badge badge-pill">3</span> </a>
 				<div class="dropdown-menu notifications">
@@ -21,7 +21,7 @@
 								<a href="#">
 									<div class="media"> <span class="avatar avatar-sm">
 											<img class="avatar-img rounded-circle" alt="User Image"
-												src="../../../public/assets/img/profiles/avatar-02.jpg">
+												src="../../../public/assets/img/hotel_logo.png">
 										</span>
 										<div class="media-body">
 											<p class="noti-details"><span class="noti-title">Carlson Tech</span> has
@@ -35,7 +35,7 @@
 								<a href="#">
 									<div class="media"> <span class="avatar avatar-sm">
 											<img class="avatar-img rounded-circle" alt="User Image"
-												src="../../../public/assets/img/profiles/avatar-11.jpg">
+												src="../../../public/assets/img/hotel_logo.png">
 										</span>
 										<div class="media-body">
 											<p class="noti-details"><span class="noti-title">International Software
@@ -50,7 +50,7 @@
 								<a href="#">
 									<div class="media"> <span class="avatar avatar-sm">
 											<img class="avatar-img rounded-circle" alt="User Image"
-												src="../../../public/assets/img/profiles/avatar-17.jpg">
+												src="../../../public/assets/img/hotel_logo.png">
 										</span>
 										<div class="media-body">
 											<p class="noti-details"><span class="noti-title">John Hendry</span> sent a
@@ -65,7 +65,7 @@
 								<a href="#">
 									<div class="media"> <span class="avatar avatar-sm">
 											<img class="avatar-img rounded-circle" alt="User Image"
-												src="../../../public/assets/img/profiles/avatar-13.jpg">
+												src="../../../public/assets/img/hotel_logo.png">
 										</span>
 										<div class="media-body">
 											<p class="noti-details"><span class="noti-title">Mercury Software
@@ -80,30 +80,32 @@
 					</div>
 					<div class="topnav-dropdown-footer"> <a href="#">View all Notifications</a> </div>
 				</div>
-			</li>
+			</li> -->
 			<li class="nav-item dropdown has-arrow">
-				<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"> <span class="user-img"><img
-							class="rounded-circle" src="../../../public/assets/img/profiles/avatar-01.jpg" width="31"
-							alt="Soeng Souy"></span> </a>
+				<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+					<span class="user-img"><img class="rounded-circle" src="../../../public/assets/img/hotel_logo.png"
+							width="31" alt="Soeng Souy"></span> </a>
 				<div class="dropdown-menu">
 					<div class="user-header">
-						<div class="avatar avatar-sm"> <img src="../../../public/assets/img/profiles/avatar-01.jpg"
-								alt="User Image" class="avatar-img rounded-circle"> </div>
+						<div class="avatar avatar-sm"> <img src="../../../public/assets/img/hotel_logo.png" alt="User Image"
+								class="avatar-img rounded-circle"> </div>
 						<div class="user-text">
-							<h6>Soeng Souy</h6>
+							<h6> &nbsp; </h6>
 							<p class="text-muted mb-0">Administrator</p>
 						</div>
-					</div> <a class="dropdown-item" href="profile.html">My Profile</a> <a class="dropdown-item"
-						href="settings.html">Account Settings</a> <a class="dropdown-item" href="login.html">Logout</a>
+					</div> 
+					<a class="dropdown-item" href="profile.html">My Profile</a> 
+					<!-- <a class="dropdown-item" href="settings.html">Account Settings</a> -->
+						 <a class="dropdown-item" href="login.html">Logout</a>
 				</div>
 			</li>
 		</ul>
-		<div class="top-nav-search">
+		<!-- <div class="top-nav-search">
 			<form>
 				<input type="text" class="form-control" placeholder="Search here">
 				<button class="btn" type="submit"><i class="fas fa-search"></i></button>
 			</form>
-		</div>
+		</div> -->
 	</div>
 	<div class="sidebar" id="sidebar">
 		<div class="sidebar-inner slimscroll">
@@ -113,20 +115,27 @@
 
 					<li class="list-divider"></li>
 
-					<li class="submenu"><router-link to="/reservations"><i class="fa-solid fa-hotel"></i> <span>Booking</span></router-link>
+					<li class="submenu"><router-link to="/reservations"><i class="fa-solid fa-hotel"></i>
+							<span>Reservation</span></router-link>
 
 					</li>
-					<li class="submenu"><router-link to="/listuser"><i class="fa-solid fa-people-line"></i> <span>Customers</span></router-link>
+					<li class="submenu"><router-link to="/listuser"><i class="fa-solid fa-people-line"></i>
+							<span>Customers</span></router-link>
 
 					</li>
-					<li class="submenu"> <router-link to="/rooms"><i class="fa-solid fa-bed"></i> <span> Rooms </span></router-link>
+					<li class="submenu"> <router-link to="/rooms"><i class="fa-solid fa-bed"></i> <span> Rooms
+							</span></router-link>
 
 					</li>
-					<li class="submenu"> <router-link to="/blackListUsers"><i class="fa-solid fa-skull-crossbones"></i><span>Black List Users</span> </router-link>
+					<li class="submenu"> <router-link to="/blackListUsers"><i
+								class="fa-solid fa-skull-crossbones"></i><span>Black List Users</span> </router-link>
 
 					</li>
-					<li class="submenu"> <router-link to="/reclamations"><i class="fa-solid fa-person-circle-exclamation"></i><span>Reclamations</span> <span v-if="reclamations.length !== 0 " class="badge badge-pill text-danger">{{ reclamations.length }}</span></router-link>
-						
+					<li class="submenu"> <router-link to="/reclamations"><i
+								class="fa-solid fa-person-circle-exclamation"></i><span>Reclamations</span> <span
+								v-if="reclamations.length !== 0" class="badge badge-pill text-danger">{{
+									reclamations.length }}</span></router-link>
+
 					</li>
 
 
@@ -137,40 +146,46 @@
 </template>
 
 <script setup>
-import '../../../public/assets/js/jquery-3.5.1.min.js';
+// import '../../../public/assets/js/jquery-3.5.1.min.js';
 // import '../../../public/assets/js/popper.min.js';
 // import '../../../public/assets/js/bootstrap.min.js';
+// import '../../../public/assets/plugins/raphael/raphael.min.js';
+// import '../../../public/assets/js/bootstrap-datetimepicker.min.js';
+// import '../../../public/assets/plugins/datatables/jquery.dataTables.min.js';
+// import '../../../public/assets/plugins/datatables/datatables.min.js';
+// import '../../../public/assets/js/moment.min.js';
+
 import '../../../public/assets/plugins/slimscroll/jquery.slimscroll.min.js';
 import '../../../public/assets/plugins/raphael/raphael.min.js';
 import '../../../public/assets/plugins/morris/morris.min.js';
 import '../../../public/assets/js/chart.morris.js';
 import '../../../public/assets/js/script.js';
-import { ref,onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 const reclamations = ref([]);
 
 const fetchReclamations = async () => {
-    await axios.get('http://localhost:8000/api/reclamation')
-        .then(res => {
-            reclamations.value = res.data.filter(reclamation_reservations => reclamation_reservations.status === 0);
-        })
-        .catch(error => {
-            console.error('Error fetching reclamations:', error);
-        })
+	await axios.get('http://localhost:8000/api/reclamation')
+		.then(res => {
+			reclamations.value = res.data.filter(reclamation_reservations => reclamation_reservations.status === 0);
+		})
+		.catch(error => {
+			console.error('Error fetching reclamations:', error);
+		})
 };
 
 onMounted(() => {
-    fetchReclamations();
+	fetchReclamations();
 });
 </script>
 
 <style >
 @import "../../../public/assets/css/bootstrap.min.css";
-@import "../../../public/assets/css/style.css"; 
+@import "../../../public/assets/css/style.css";
 @import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css";
+@import "https://cdn.oesmith.co.uk/morris-0.5.1.css";
 @import "../../../public/assets/plugins/fontawesome/css/fontawesome.min.css";
 @import "../../../public/assets/plugins/fontawesome/css/all.min.css";
 @import "../../../public/assets/css/feathericon.min.css";
-@import "../../../public/assets/plugins/morris/morris.css"; 
-</style>
+@import "../../../public/assets/plugins/morris/morris.css";</style>

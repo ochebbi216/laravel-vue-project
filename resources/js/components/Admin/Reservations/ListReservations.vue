@@ -27,7 +27,7 @@
                                     <table class="datatable table table-stripped table table-hover table-center mb-0">
 
                                         <thead>
-                                            <tr>
+                                            <tr class="text-center">
                                                 <th>ID</th>
                                                 <th>Customer</th>
                                                 <th>N°Room</th>
@@ -38,6 +38,7 @@
                                                 <th>Status</th>
                                                 <th>Room</th>
                                                 <th>Cost</th>
+                                                <th>Pension</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -45,7 +46,7 @@
                                             <tr v-if="reservations.length === 0">
                                                 <td colspan="10">Aucune réservation pour le moment.</td>
                                             </tr>
-                                            <tr v-for="reservation in reservations" :key="reservation.id">
+                                            <tr class="text-center" v-for="reservation in reservations" :key="reservation.id">
                                                 <td>{{ reservation.id }}</td>
                                                 <td>{{ reservation.user?.name }}</td>
                                                 <td>{{ reservation.room?.room_number }}</td>
@@ -57,7 +58,6 @@
                                                     <select v-if="canDeleteReservation(reservation)" class="form-control" style="width:max-content" v-model="reservation.status">
                                                         <option :value="reservation.status" :disabled="true"> {{
                                                             reservation.status }}</option>
-                                                        <option value="pending">Pending</option>
                                                         <option value="confirmed">Confirmed</option>
                                                         <option value="completed">Completed</option>
                                                         <option value="cancelled">Cancelled</option>
@@ -70,10 +70,10 @@
                                                 <td>
                                                     <button v-if="canDeleteReservation(reservation)"
                                                         @click="deleteReservation(reservation.id)"
-                                                        class="btn btn-outline-danger">Supprimer</button>
-                                                    <span v-else class="text-danger"><b>deleted </b></span>&nbsp; 
-                                                    <button v-if="canDeleteReservation(reservation)" class="btn btn-primary veiwbutton"
-                                                        @click="saveReservation(reservation)"> Save Changes</button>
+                                                        class="btn btn-outline-danger mx-2"><i class="fa-regular fa-trash-can"></i></button>
+                                                    <span v-else class="text-danger"><b>Not Dispo </b></span>&nbsp; 
+                                                    <button v-if="canDeleteReservation(reservation)" class="btn btn-light veiwbutton"
+                                                        @click="saveReservation(reservation)"> <i class="fa-solid fa-check"></i></button>
                                                     
                                                 </td>
                                             </tr>
@@ -97,21 +97,39 @@ import Header from "../../../layouts/Header.vue";
 const isLoading = ref(true)
 const reservations = ref([]);
 
+const completStatusReservation = (res) => {
+    const currentDate = new Date();
+    const checkOutDate = new Date(res.checkout);
+     if(checkOutDate < currentDate){
+        if (res.status === 'confirmed') {
+            res.status = 'completed';
+            updateReservationStatus(res.id, 'completed');
+        }
+    }
+
+}
+
 const canDeleteReservation = (reservation) => {
     const currentDate = new Date();
-    const checkInDate = new Date(reservation.check_in);
-    const checkOutDate = new Date(reservation.check_out);
+    const checkInDate = new Date(reservation.checkin);
+    const checkOutDate = new Date(reservation.checkout);
     const delDate = reservation.deleted_at ? new Date(reservation.deleted_at) : null;
-
+    completStatusReservation(reservation);
     if (!delDate && checkInDate > currentDate) {
         return true; // Can only delete a reservation if it's not already deleted and not yet started
-    } else if (checkInDate < currentDate || checkOutDate < currentDate || delDate !== null) {
+    } else if (checkInDate < currentDate || checkOutDate < currentDate || reservation.status == 'deleted' ) {
         // Reservation is finished or dates have passed
-        if (reservation.status !== 'completed') {
-            reservation.status = 'completed';
-            updateReservationStatus(reservation.id, 'completed');
-        }
+
         return false; // Cannot delete a finished reservation
+    }
+
+
+    else if (delDate !== null){
+        if (reservation.status !== 'deleted') {
+            reservation.status = 'deleted';
+            updateReservationStatus(reservation.id, 'deleted');
+        }
+        return false;
     }
     return true; // Default: return true to handle other cases
 };
@@ -134,7 +152,8 @@ const deleteReservation = async (id) => {
         .then(() => {
             // Using a filter function to remove the reservation from the list
             reservations.value = reservations.value.filter(reservation => reservation.id !== id);
-            fetchReservations();
+            // updateReservationStatus(id, 'deleted');
+
 
         })
         .catch(error => {
@@ -156,6 +175,7 @@ const saveReservation = async (reservation) => {
     await axios.put(`/api/reservations/${reservation.id}`, { status: reservation.status })
         .then(() => {
             console.log('Status updated successfully.');
+            window.location.reload(); 
         })
         .catch(error => {
             console.error('Error while updating the reservation status:', error);
@@ -168,11 +188,5 @@ const saveReservation = async (reservation) => {
 };
 </script>
 <style scoped>
-@import "../../../../../public/assets/css/bootstrap.min.css";
-@import "../../../../../public/assets/css/style.css"; 
-@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css";
-@import "../../../../../public/assets/plugins/fontawesome/css/fontawesome.min.css";
-@import "../../../../../public/assets/plugins/fontawesome/css/all.min.css";
-@import "../../../../../public/assets/css/feathericon.min.css";
-@import "../../../../../public/assets/plugins/morris/morris.css"; 
+
 </style>

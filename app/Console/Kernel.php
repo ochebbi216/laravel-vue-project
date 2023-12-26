@@ -11,13 +11,13 @@ class Kernel extends ConsoleKernel
      * Define the application's command schedule.
      */
 
-    protected function schedule(Schedule $schedule)
-    {
-        // Run the method every minute
-        $schedule->call(function () {
-            \App\Models\Reservation::deleteExpiredReservations();
-        })->everyMinute();
-    }
+    // protected function schedule(Schedule $schedule)
+    // {
+    //     // Run the method every minute
+    //     $schedule->call(function () {
+    //         \App\Models\Reservation::deleteExpiredReservations();
+    //     })->everyMinute();
+    // }
 
     /**
      * Register the commands for the application.
