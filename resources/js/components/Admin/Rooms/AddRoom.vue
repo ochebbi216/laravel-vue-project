@@ -2,7 +2,7 @@
         <Header></Header>
         <div class="main-wrapper">
 
-    <div class="page-wrapper" style="padding-left: 20%;">
+    <div class="page-wrapper bg" style="padding-left: 20%;" >
         <div class="content container-fluid">
             <div class="page-header">
                 <div class="row align-items-center">

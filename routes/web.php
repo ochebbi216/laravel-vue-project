@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/{any}', function () {
-    return view('layout.app');
+Route::prefix('admin')->group(function () {
+    Route::get('/{any}', function () {
+        return view('layout.app'); 
     })->where('any', '.*');
+});
+
+Route::get('/{any}', function () {
+    return view('layout.user'); 
+})->where('any', '.*');

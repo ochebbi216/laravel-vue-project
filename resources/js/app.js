@@ -6,8 +6,8 @@ import { routes } from "./routes";
 import App from './App.vue'
 let app = createApp(App)
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory('/admin'),
     routes: routes,
 })
 app.use(router);
-app.mount("#app")
+app.mount("#app");

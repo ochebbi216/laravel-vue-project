@@ -1,7 +1,7 @@
 <template>
         <Header></Header>
     <div class="page-wrapper">
-        <div class="content container-fluid">
+        <div class="content container-fluid bg">
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">

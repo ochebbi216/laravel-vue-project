@@ -4,7 +4,7 @@
         <div v-if="isLoading" class="d-flex justify-content-center align-items-center" style="height: 100vh;">
             <div class=" spinner-border " style="color: rgb(0, 150, 136);"></div>
         </div>
-        <div v-else  class="page-wrapper">
+        <div v-else  class="page-wrapper bg">
     <div class="content container-fluid">
       <div class="page-header">
         <div class="row align-items-center">

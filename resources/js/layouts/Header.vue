@@ -111,7 +111,10 @@
 		<div class="sidebar-inner slimscroll">
 			<div id="sidebar-menu" class="sidebar-menu">
 				<ul>
-					<li> <a href="#"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a> </li>
+					<li> <router-link to="/"><i class="fas fa-tachometer-alt"></i> 
+						<span>Dashboard</span></router-link>
+					
+					</li>
 
 					<li class="list-divider"></li>
 
@@ -132,9 +135,11 @@
 
 					</li>
 					<li class="submenu"> <router-link to="/reclamations"><i
-								class="fa-solid fa-person-circle-exclamation"></i><span>Reclamations</span> <span
-								v-if="reclamations.length !== 0" class="badge badge-pill text-danger">{{
-									reclamations.length }}</span></router-link>
+								class="fa-solid fa-person-circle-exclamation"></i><span>Reclamations</span> 
+								<span
+								v-if="reclamations.length !== 0" class="badge badge-pill text-white bg-danger">
+								{{reclamations.length }}</span>
+								</router-link>
 
 					</li>
 
@@ -150,16 +155,15 @@
 // import '../../../public/assets/js/popper.min.js';
 // import '../../../public/assets/js/bootstrap.min.js';
 // import '../../../public/assets/plugins/raphael/raphael.min.js';
-// import '../../../public/assets/js/bootstrap-datetimepicker.min.js';
 // import '../../../public/assets/plugins/datatables/jquery.dataTables.min.js';
 // import '../../../public/assets/plugins/datatables/datatables.min.js';
-// import '../../../public/assets/js/moment.min.js';
+// // import '../../../public/assets/js/moment.min.js';
 
-import '../../../public/assets/plugins/slimscroll/jquery.slimscroll.min.js';
-import '../../../public/assets/plugins/raphael/raphael.min.js';
-import '../../../public/assets/plugins/morris/morris.min.js';
-import '../../../public/assets/js/chart.morris.js';
-import '../../../public/assets/js/script.js';
+// import '../../../public/assets/plugins/slimscroll/jquery.slimscroll.min.js';
+// import '../../../public/assets/plugins/raphael/raphael.min.js';
+// import '../../../public/assets/plugins/morris/morris.min.js';
+// import '../../../public/assets/js/chart.morris.js';
+// import '../../../public/assets/js/script.js';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
@@ -180,12 +184,18 @@ onMounted(() => {
 });
 </script>
 
-<style >
-@import "../../../public/assets/css/bootstrap.min.css";
+<style>
+
+.bg {
+    background-color: rgb(248, 249, 250);
+}
+
+/* @import "../../../public/assets/css/bootstrap.min.css";
 @import "../../../public/assets/css/style.css";
 @import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css";
 @import "https://cdn.oesmith.co.uk/morris-0.5.1.css";
 @import "../../../public/assets/plugins/fontawesome/css/fontawesome.min.css";
 @import "../../../public/assets/plugins/fontawesome/css/all.min.css";
 @import "../../../public/assets/css/feathericon.min.css";
-@import "../../../public/assets/plugins/morris/morris.css";</style>
+@import "../../../public/assets/plugins/morris/morris.css"; */
+</style>
