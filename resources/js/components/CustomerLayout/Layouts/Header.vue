@@ -11,7 +11,7 @@
 				<div class="collapse navbar-collapse" id="ftco-nav">
 					<ul class="navbar-nav ml-lg-5" >
 						<li class="nav-item"><router-link :to="{ name: 'Acceuil' }" class="nav-link" style="font-size: 17px;"> Home</router-link></li>
-						<li class="nav-item"><a href="rooms.html" class="nav-link" style="font-size: 17px;">Our Rooms</a></li>
+						<li class="nav-item"><router-link :to="{ name: 'Room' }" class="nav-link" style="font-size: 17px;">Our Rooms</router-link></li>
 						<li class="nav-item"><a href="restaurant.html" class="nav-link" style="font-size: 17px;">Reservations</a></li>
 						<li class="nav-item"><a href="restaurant.html" class="nav-link" style="font-size: 17px;">Complaints</a></li>
 						<li class="nav-item"><a href="about.html" class="nav-link" style="font-size: 17px;">About Us</a></li>

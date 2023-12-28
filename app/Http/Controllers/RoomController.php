@@ -28,6 +28,16 @@ class RoomController extends Controller
         return response()->json($room, 201);
     }
 
+    public function getRoomByType($type){
+        $rooms = Room::where('room_type', $type)->get();
+    
+        if ($rooms->isEmpty()) {
+            return response()->json(['message' => 'No such type of rooms exist']);
+        }
+    
+        return response()->json($rooms);
+    }
+
     public function show($id)
     {
         $room = Room::findOrFail($id);

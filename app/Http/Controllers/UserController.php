@@ -121,11 +121,13 @@ class UserController extends Controller
 
     public function reservationHistory($id)
     {
-        $reservations = Reservation::with(['room', 'user'])->withTrashed()->find($id)->get();
-        if ($reservations) {
-            return response()->json($reservations);
+        $reservations = Reservation::with(['room', 'user'])->where('id_user', $id)->get();
+    
+        if ($reservations->isEmpty()) {
+            return response()->json('This user has no reservations.', 404);
         }
-        return response()->json('this user got no reservation.', 404);
+        
+        return response()->json($reservations);
     }
 
     public function addToBlacklist($id)

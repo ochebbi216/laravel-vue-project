@@ -8,7 +8,8 @@
     <link rel="icon" type="image/x-icon" href="{{ URL::to('favicon.ico') }}">
 
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700&display=swap" rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link href="{{ URL::to('userAssets/css/open-iconic-bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ URL::to('userAssets/css/animate.css') }}" rel="stylesheet">
     <link href="{{ URL::to('userAssets/css/owl.carousel.min.css') }}" rel="stylesheet">
