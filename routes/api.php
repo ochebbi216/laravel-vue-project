@@ -33,6 +33,7 @@ Route::middleware('api')->group(function () {
 Route::middleware('api')->group(function () {
     Route::resource('reservations', ReservationController::class);
     });
+Route::get('/reservationHistory/{id}', [UserController::class, 'reservationHistory']);
 
 Route::post('/admin/register', [AdminController::class, 'register']);
 Route::post('/admin/login', [AdminController::class, 'login']);

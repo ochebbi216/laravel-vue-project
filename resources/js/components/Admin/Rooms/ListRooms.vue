@@ -41,7 +41,8 @@
                       <td><img :src="room.image" width="100" height="80" /> </td>
                       <td>{{ room.room_number }}</td>
                       <td>{{ room.room_type }}</td>
-                      <td>{{ room.description.slice(0, 15) }}</td>
+                      <td v-if="room.description.length > 15">{{ room.description.slice(0, 15) }}...</td>
+                      <td v-else>{{ room.description }}</td>
                       <td>
                         <span v-if="isAvailable(room.id)" class="badge" style="background-color: rgb(1, 177, 1); color: aliceblue;">Yes</span>
                         <span v-else class="badge bg-danger" style="color: aliceblue;">No</span>

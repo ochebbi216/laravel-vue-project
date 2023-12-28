@@ -7,7 +7,6 @@ import ListUser from './components/Admin/User/ListUsers.vue';
 import BlackListUsers from './components/Admin/User/BlackListUser.vue';
 import Reclamation from './components/Admin/Reclamations/Reclamation.vue';
 import DetaisReclamation from'./components/Admin/Reclamations/DetailsReclamation.vue';
-import Acceuil from './components/CustomerLayout/Layouts/Header.vue';
 
 export const routes = [
     {
@@ -50,7 +49,6 @@ export const routes = [
         path: '/reclamations',
         component: Reclamation
     },
-
     {
         name: 'detailsrec',
         path: '/Detailsrec/:id',

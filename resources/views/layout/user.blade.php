@@ -23,7 +23,7 @@
     <link href="{{ URL::to('userAssets/css/style.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="user-app"></div>
+    <div id="userapp"></div>
 
 
     <script src="{{ URL::to('userAssets/js/jquery.min.js') }}"></script>
@@ -39,7 +39,8 @@
     <script src="{{ URL::to('userAssets/js/jquery.animateNumber.min.js') }}"></script>
     <script src="{{ URL::to('userAssets/js/bootstrap-datepicker.js') }}"></script>
     <script src="{{ URL::to('userAssets/js/scrollax.min.js') }}"></script>
-    <script src="{{ URL::to('userAssets/js/google-map.js') }}"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script> -->
+    <!-- <script src="{{ URL::to('userAssets/js/google-map.js') }}"></script> -->
     <script src="{{ URL::to('userAssets/js/main.js') }}"></script>
     @vite('resources/js/user.js') 
 

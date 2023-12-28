@@ -9162,8 +9162,8 @@ textarea.form-control {
   height: inherit !important; }
 
 .ftco-animate {
-  opacity: 0;
-  visibility: hidden; }
+  opacity: 0.5;
+  visibility: visible; }
 
 .bg-primary {
   background: #21cc7a !important; }

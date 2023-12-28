@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -92,9 +93,10 @@ class UserController extends Controller
                 'user' => $user
             ], 200);
         }
-        throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],]);
-    }
+        else{
+            return response()->json('The provided credentials are incorrect.', 400);
+        }
+        }
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
@@ -119,14 +121,14 @@ class UserController extends Controller
 
     public function reservationHistory($id)
     {
-        $user = User::with('reservations')->find($id);
-        if ($user) {
-            return response()->json($user->reservationHistory());
+        $reservations = Reservation::with(['room', 'user'])->withTrashed()->find($id)->get();
+        if ($reservations) {
+            return response()->json($reservations);
         }
-        return response()->json('User not found.', 404);
+        return response()->json('this user got no reservation.', 404);
     }
 
-  public function addToBlacklist($id)
+    public function addToBlacklist($id)
     {
         // ... Assuming this function will just ban the user ...
         $user = User::find($id);
@@ -138,7 +140,7 @@ class UserController extends Controller
         return response()->json('User not found.', 404);
     }
 
-	   public function removeFromBlacklist($id)
+    public function removeFromBlacklist($id)
     {
         $user = User::find($id);
         if ($user) {
@@ -148,7 +150,7 @@ class UserController extends Controller
         }
         return response()->json('User not found.', 404);
     }
-public function toggleBanUser($id)
+    public function toggleBanUser($id)
     {
         $user = User::find($id);
         if ($user) {
@@ -158,7 +160,7 @@ public function toggleBanUser($id)
         }
         return response()->json(['message' => 'User not found.'], 404);
     }
-public function getBlacklistedUsers()
+    public function getBlacklistedUsers()
     {
         $bannedUsers = User::where('banned', true)->get();
         return response()->json($bannedUsers);
