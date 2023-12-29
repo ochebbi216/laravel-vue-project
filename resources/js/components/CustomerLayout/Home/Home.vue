@@ -51,7 +51,7 @@
 								<div class="col-md d-flex py-md-4">
 									<div class="form-group align-self-stretch d-flex align-items-end">
 										<div class="wrap align-self-stretch py-3 px-4">
-											<label for="#" style="font-size: 18px;">Check-out Date</label>
+											<label for="#" style="font-size: 17px;">Check-out Date</label>
 											<input type="date" class="form-control checkout_date"
 												placeholder="Check-out date">
 										</div>
@@ -60,7 +60,7 @@
 								<div class="col-md d-flex py-md-4 ">
 									<div class="form-group align-self-stretch d-flex align-items-end" >
 										<div class="wrap align-self-stretch py-3 px-4">
-											<label for="#" style="font-size: 18px;" >Room</label>
+											<label for="#" style="font-size: 17px;" >Room</label>
 											<div class="form-field">
 												<div class="select-wrap">
 													<div class="icon"><span class="ion-ios-arrow-down"></span></div>
@@ -75,48 +75,14 @@
 										</div>
 									</div>
 								</div>
-								<!-- <div class="col-md d-flex py-md-4">
-									<div class="form-group align-self-stretch d-flex align-items-end">
-										<div class="wrap align-self-stretch py-3 px-4">
-											<label for="#">Adult</label>
-											<div class="form-field">
-												<div class="select-wrap">
-													<div class="icon"><span class="ion-ios-arrow-down"></span></div>
-													<select name="" id="" class="form-control">
-														<option value="">1 Adult</option>
-														<option value="">2 Adult</option>
-														<option value="">3 Adult</option>
-														<option value="">4 Adult</option>
-														<option value="">5 Adult</option>
-													</select>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-md d-flex py-md-4">
-									<div class="form-group align-self-stretch d-flex align-items-end">
-										<div class="wrap align-self-stretch py-3 px-4">
-											<label for="#">Children</label>
-											<div class="form-field">
-												<div class="select-wrap">
-													<div class="icon"><span class="ion-ios-arrow-down"></span></div>
-													<select name="" id="" class="form-control">
-														<option value="">1 Child</option>
-														<option value="">2 Child</option>
-														<option value="">3 Child</option>
-													</select>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div> -->
+
+
 								<div class="col-md d-flex">
 									<div class="form-group d-flex align-self-stretch">
-										<a href="#"
+										<button
 											class="btn btn-primary py-5 py-md-3 px-4 align-self-stretch d-block"><span>Check
-												Availability <small>Best Price Guaranteed!</small></span></a>
-									</div>
+												Availability <small>Best Price Guaranteed!</small></span></button>
+									</div> 
 								</div>
 							</div>
 						</form>
@@ -125,7 +91,44 @@
 			</div>
 		</section>
 
+                <div class="row no-gutters">
+                    <div v-for="(room, index) in filteredRooms" :key="room.id" class="col-lg-6">
+                        <div class="room-wrap d-md-flex">
+                            <!-- Use dynamic class binding to alternate image positions -->
+                            <a :href="room.detailsLink" :class="{ 'order-md-last': index % 2 >= 1 }" class="img"
+                                :style="{ 'background-image': 'url(' + room.image + ')' }"></a>
+                            <!-- Use dynamic class binding to alternate arrow styles -->
+                            <div
+                                :class="[index % 2 >= 1 ? 'half right-arrow d-flex align-items-center' : 'half left-arrow d-flex align-items-center']">
+                                <div class="text p-4 text-center">
+                                    <p class="star mb-0">
+                                        <!-- Render stars -->
+                                        <span class="ion-ios-star" v-for="n in getRoomStars(room.room_type)"
+                                            :key="n"></span>
+                                    </p>
+                                    <p class="mb-0">
+                                        <!-- Show placeholders for illustration, adjust as needed -->
+                                        <span class="price mr-1">From {{ getRoomPrice(room.room_type) }} DT</span> <span
+                                            class="per">per night</span>
+                                    </p>
+                                    <h3 class="mb-3"><a href="">{{ room.room_type }}</a></h3>
 
+                                    <p class="pt-1">
+                                        <a @click="Details(room.id)" href="" class="btn-custom px-3 py-2 rounded"> View
+                                            Details <i class="fa-solid fa-circle-info"></i></a>
+                                    </p>
+                                    <p v-if="!isAvailable(room.id)" class="pt-1 text-danger">
+                                        Available from <span>{{ getNextAvailableDate(room.id) }}</span>
+                                    </p>
+                                    <p v-else class="pt-1">
+                                        <a href="" class="btn-info active px-3 py-2 rounded">Get Room Now!
+                                            <i class="fa-solid fa-circle-arrow-right"></i></a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 		<section class="ftco-section ">
 			<div class="container">
 				<div class="row justify-content-center mb-5 pb-3">

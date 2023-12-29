@@ -12,8 +12,8 @@
 					<ul class="navbar-nav ml-lg-5" >
 						<li class="nav-item"><router-link :to="{ name: 'Acceuil' }" class="nav-link" style="font-size: 16px;"> Home</router-link></li>
 						<li class="nav-item"><router-link :to="{ name: 'Room' }" class="nav-link" style="font-size: 16px;">Our Rooms</router-link></li>
-						<li class="nav-item"><a href="restaurant.html" class="nav-link" style="font-size: 16px;">Reservations</a></li>
-						<li class="nav-item"><a href="restaurant.html" class="nav-link" style="font-size: 16px;">Complaints</a></li>
+						<li class="nav-item"><router-link :to="{ name: 'Reservation' }" class="nav-link" style="font-size: 16px;">Reservations</router-link></li>
+						<li class="nav-item"><router-link :to="{ name: 'Reclamation' }" class="nav-link" style="font-size: 16px;">Complaints</router-link></li>
 						<li class="nav-item"><a href="about.html" class="nav-link" style="font-size: 16px;">About Us</a></li>
 
 					</ul>

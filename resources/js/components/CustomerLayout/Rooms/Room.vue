@@ -87,7 +87,7 @@
                                         Available from <span>{{ getNextAvailableDate(room.id) }}</span>
                                     </p>
                                     <p v-else class="pt-1">
-                                        <a href="" class="btn-info active px-3 py-2 rounded">Book Room Now!
+                                        <a href="" class="btn-info active px-3 py-2 rounded">Get Room Now!
                                             <i class="fa-solid fa-circle-arrow-right"></i></a>
                                     </p>
                                 </div>

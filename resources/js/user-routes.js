@@ -11,7 +11,6 @@ export const user_routes = [
         name:'Acceuil',
         path:'/',
         component:Acceuil,
-        meta:{isAuthUser:true}
     },
     {
         name:'Login',
