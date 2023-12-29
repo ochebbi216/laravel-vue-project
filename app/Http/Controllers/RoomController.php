@@ -27,7 +27,28 @@ class RoomController extends Controller
         $room->save();
         return response()->json($room, 201);
     }
+    public function checkAvailability(Request $request)
+    {
+        $checkIn = $request->checkin;
+        $checkOut = $request->checkout;
+        $roomType = $request->room_type;
 
+        // Logic to get available rooms based on check-in, check-out, and room type
+        $availableRooms = Room::where('room_type', $roomType)
+            ->whereDoesntHave('reservations', function ($query) use ($checkIn, $checkOut) {
+                $query->where(function ($q) use ($checkIn, $checkOut) {
+                    $q->whereBetween('checkin', [$checkIn, $checkOut])
+                        ->orWhereBetween('checkout', [$checkIn, $checkOut])
+                        ->orWhere(function ($q) use ($checkIn, $checkOut) {
+                            $q->where('checkin', '<=', $checkIn)
+                                ->where('checkout', '>=', $checkOut);
+                        });
+                });
+            })
+            ->get();
+
+        return response()->json(['available_rooms' => $availableRooms]);
+    }
     public function getRoomByType($type){
         $rooms = Room::where('room_type', $type)->get();
     

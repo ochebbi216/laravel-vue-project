@@ -30,7 +30,8 @@ Route::middleware('api')->group(function () {
     Route::resource('rooms', RoomController::class);
 
     });
-    Route::get('/getroomsbycat/{type}',[RoomController::class, 'getRoomByType']);
+Route::get('/getroomsbycat/{type}',[RoomController::class, 'getRoomByType']);
+Route::get('/checkAvailability',[RoomController::class,'checkAvailability']);
 
 Route::middleware('api')->group(function () {
     Route::resource('reservations', ReservationController::class);

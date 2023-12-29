@@ -1,5 +1,5 @@
 <template>
-    <div>
+	<div>
 		<div class="hero bgi">
 			<section class="home-slider ">
 				<div class="slider-item ">
@@ -37,36 +37,36 @@
 			<div class="container">
 				<div class="row no-gutters">
 					<div class="col-lg-12">
-						<form action="#" class="booking-form " style="background-color: rgb(248, 247, 247);">
+						<form @submit.prevent="getRooms" class="booking-form" style="background-color: rgb(248, 247, 247);">
 							<div class="row">
 								<div class="col-md d-flex py-md-4">
 									<div class="form-group align-self-stretch d-flex align-items-end">
 										<div class="wrap align-self-stretch py-3 px-4">
-											<label for="#" style="font-size: 18px;">Check-in Date</label>
-											<input type="date" class="form-control checkin_date"
-												placeholder="Check-in date">
+											<label for="checkin_date" style="font-size: 18px;">Check-in Date</label>
+											<input type="date" id="checkin_date" class="form-control checkin_date"
+												v-model="req.checkin" placeholder="Check-in date">
 										</div>
 									</div>
 								</div>
 								<div class="col-md d-flex py-md-4">
 									<div class="form-group align-self-stretch d-flex align-items-end">
 										<div class="wrap align-self-stretch py-3 px-4">
-											<label for="#" style="font-size: 17px;">Check-out Date</label>
-											<input type="date" class="form-control checkout_date"
-												placeholder="Check-out date">
+											<label for="checkout_date" style="font-size: 17px;">Check-out </label>
+											<input type="date" id="checkout_date" class="form-control checkout_date"
+												v-model="req.checkout" placeholder="Check-out date">
 										</div>
 									</div>
 								</div>
-								<div class="col-md d-flex py-md-4 ">
-									<div class="form-group align-self-stretch d-flex align-items-end" >
+								<div class="col-md d-flex py-md-4">
+									<div class="form-group align-self-stretch d-flex align-items-end">
 										<div class="wrap align-self-stretch py-3 px-4">
-											<label for="#" style="font-size: 17px;" >Room</label>
+											<label for="room_type" style="font-size: 17px;">Room</label>
 											<div class="form-field">
 												<div class="select-wrap">
 													<div class="icon"><span class="ion-ios-arrow-down"></span></div>
-													<select name="" id="" class="form-control">
+													<select id="room_type" class="form-control" v-model="req.room_type">
 														<option value="Suite">Suite (up to 5 person)</option>
-														<option value="Single">Single (only 1 person) </option>
+														<option value="Single">Single (only 1 person)</option>
 														<option value="Double">Double (up to 2 person)</option>
 														<option value="Triple">Triple (up to 3 person)</option>
 													</select>
@@ -75,14 +75,13 @@
 										</div>
 									</div>
 								</div>
-
-
 								<div class="col-md d-flex">
 									<div class="form-group d-flex align-self-stretch">
-										<button
-											class="btn btn-primary py-5 py-md-3 px-4 align-self-stretch d-block"><span>Check
-												Availability <small>Best Price Guaranteed!</small></span></button>
-									</div> 
+										<button type="submit"
+											class="btn btn-primary py-5 py-md-3 px-4 align-self-stretch d-block">
+											<span>Check Availability <small>Best Price Guaranteed!</small></span>
+										</button>
+									</div>
 								</div>
 							</div>
 						</form>
@@ -91,44 +90,117 @@
 			</div>
 		</section>
 
-                <div class="row no-gutters">
-                    <div v-for="(room, index) in filteredRooms" :key="room.id" class="col-lg-6">
-                        <div class="room-wrap d-md-flex">
-                            <!-- Use dynamic class binding to alternate image positions -->
-                            <a :href="room.detailsLink" :class="{ 'order-md-last': index % 2 >= 1 }" class="img"
-                                :style="{ 'background-image': 'url(' + room.image + ')' }"></a>
-                            <!-- Use dynamic class binding to alternate arrow styles -->
-                            <div
-                                :class="[index % 2 >= 1 ? 'half right-arrow d-flex align-items-center' : 'half left-arrow d-flex align-items-center']">
-                                <div class="text p-4 text-center">
-                                    <p class="star mb-0">
-                                        <!-- Render stars -->
-                                        <span class="ion-ios-star" v-for="n in getRoomStars(room.room_type)"
-                                            :key="n"></span>
-                                    </p>
-                                    <p class="mb-0">
-                                        <!-- Show placeholders for illustration, adjust as needed -->
-                                        <span class="price mr-1">From {{ getRoomPrice(room.room_type) }} DT</span> <span
-                                            class="per">per night</span>
-                                    </p>
-                                    <h3 class="mb-3"><a href="">{{ room.room_type }}</a></h3>
+		<!-- Result View -->
+		<div class="row no-gutters mt-5" v-if="show">
+			<div class="col-lg-12 text-center">
+    		<h2 class="mt-5 mb-4">{{ rooms.length }} properties found:</h2>	
+			</div>			
+			<div v-if="rooms.length === 1" class="col-lg-6 offset-lg-3">
+				<div href="#" class="room-wrap d-md-flex">
+					<a @click.prevent="Details(rooms[0].id)" class="img"
+						:style="{ 'background-image': 'url(' + rooms[0].image + ')' }"></a>
+					<div class="half d-flex align-items-center">
+						<div class="text p-4 text-center">
+							<!-- Use dynamic rendering for the stars. Here we assume 'getRoomStars' returns an array with the number of stars. -->
+							<p class="star mb-0">
+								<span v-for="star in getRoomStars(rooms[0].room_type)" :key="star"
+									class="ion-ios-star"></span>
+							</p>
+							<p class="mb-0">
+								<span class="price mr-1">From {{ getRoomPrice(rooms[0].room_type) }} DT</span>
+								<span class="per">per night</span>
+							</p>
+							<h3 class="mb-3"><a href="#">{{ rooms[0].room_type }}</a></h3>
+							<p class="pt-1"><a href="#" @click.prevent="Details(rooms[0].id)"
+									class="btn-custom px-3 py-2 rounded">View Details <span
+										class="ion-ios-arrow-forward"></span></a></p>
+							<p class="pt-1">
+								<a href="" class="btn-info active px-3 py-2 rounded">Get Room Now! <i
+										class="fa-solid fa-circle-arrow-right"></i></a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
 
-                                    <p class="pt-1">
-                                        <a @click="Details(room.id)" href="" class="btn-custom px-3 py-2 rounded"> View
-                                            Details <i class="fa-solid fa-circle-info"></i></a>
-                                    </p>
-                                    <p v-if="!isAvailable(room.id)" class="pt-1 text-danger">
-                                        Available from <span>{{ getNextAvailableDate(room.id) }}</span>
-                                    </p>
-                                    <p v-else class="pt-1">
-                                        <a href="" class="btn-info active px-3 py-2 rounded">Get Room Now!
-                                            <i class="fa-solid fa-circle-arrow-right"></i></a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+			<div v-else v-for="(room, index) in rooms" :key="room.id" class="col-lg-6 offset-lg-3">
+				<div class="room-wrap d-md-flex">
+					<a @click.prevent="Details(room.id)" :class="{ 'order-md-last': index % 2 === 1 }" class="img"
+						:style="{ 'background-image': 'url(' + room.image + ')' }"></a>
+					<div
+						:class="[index % 2 === 1 ? 'half right-arrow d-flex align-items-center' : 'half left-arrow d-flex align-items-center']">
+						<div class="text p-4 text-center">
+							<!-- Use dynamic rendering for the stars. Here we assume 'getRoomStars' returns an array with the number of stars. -->
+							<p class="star mb-0">
+								<span v-for="star in getRoomStars(room.room_type)" :key="star" class="ion-ios-star"></span>
+							</p>
+							<p class="mb-0">
+								<span class="price mr-1">From {{ getRoomPrice(room.room_type) }} DT</span>
+								<span class="per">per night</span>
+							</p>
+							<h3 class="mb-3"><a href="#">{{ room.room_type }}</a></h3>
+							<p class="pt-1"><a @click.prevent="Details(room.id)" class="btn-custom px-3 py-2 rounded">View
+									Details <span class="ion-ios-arrow-forward"></span></a></p>
+							<p class="pt-1">
+								<a href="" class="btn-info active px-3 py-2 rounded">Get Room Now! <i
+										class="fa-solid fa-circle-arrow-right"></i></a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<section class="ftco-section">
+				<div class="container table-responsive">
+
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th class="">Room Type</th>
+								<th class="text-center">LPD</th>
+								<th class="text-center">Demi Pension</th>
+								<th class="text-center">Pension Complete</th>
+								<th class="text-center">All Inclusive</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th class="">Single</th>
+								<td class="text-center ">80 DT</td>
+								<td class="text-center">100 DT</td>
+								<td class="text-center">150 DT</td>
+								<td class="text-center">200 DT</td>
+							</tr>
+							<tr>
+								<th class="">Double</th>
+								<td class="text-center">100 DT</td>
+								<td class="text-center">120 DT</td>
+								<td class="text-center">170 DT</td>
+								<td class="text-center">220 DT</td>
+							</tr>
+							<tr>
+								<th class="">Triple</th>
+								<td class="text-center">120 DT</td>
+								<td class="text-center">140 DT</td>
+								<td class="text-center">190 DT</td>
+								<td class="text-center">240 DT</td>
+							</tr>
+							<tr>
+								<th class="">Suite</th>
+								<td class="text-center">160 DT</td>
+								<td class="text-center">180 DT</td>
+								<td class="text-center">230 DT</td>
+								<td class="text-center">300 DT</td>
+							</tr>
+							<!-- Add other room types as needed -->
+						</tbody>
+					</table>
+				</div>
+			</section>
+
+
+
+		</div>
+
 		<section class="ftco-section ">
 			<div class="container">
 				<div class="row justify-content-center mb-5 pb-3">
@@ -391,11 +463,100 @@
 				</div>
 			</div>
 		</section>
-    </div>
+	</div>
 </template>
 
 <script setup>
+import { ref, onMounted, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
+const req = ref({});
+const rooms = ref([]);
+const router = useRouter();
+const show = ref(false);
 
+const getRooms = async () => {
+	try {
+		const response = await axios.get('http://localhost:8000/api/checkAvailability', {
+			params: req.value
+		});
+		rooms.value = response.data.available_rooms;
+		show.value = true;
+		console.log(response.data)
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+const Details = (id) => {
+	router.push({ name: 'RoomDetails', params: { id } });
+
+};
+// function getRoomPrice(type) {
+//   const dailyRates = {
+//     'Single': {
+//       'demi-pension': 100,
+//       'pension-complete': 150,
+//       'lpd': 80,
+//       'all-inclusive': 200,
+//     },
+//     'Double': {
+//       'demi-pension': 120,
+//       'pension-complete': 170,
+//       'lpd': 100,
+//       'all-inclusive': 220,
+//     },
+//     'Triple': {
+//       'demi-pension': 140,
+//       'pension-complete': 190,
+//       'lpd': 120,
+//       'all-inclusive': 240,
+//     },
+//     'Suite': {
+//       'demi-pension': 180,
+//       'pension-complete': 230,
+//       'lpd': 160,
+//       'all-inclusive': 300,
+//     },
+//     // other room type rates
+//   };
+
+//   if (type in dailyRates) {
+//     // Here, you can return the specific rate based on the room type
+//     return dailyRates[type]['lpd']; // Adjust 'lpd' to the desired rate type
+//   }
+
+//   return 0; // Return 0 for an unknown room type or handle it as required
+// }
+
+function getRoomPrice(type) {
+	switch (type) {
+		case 'Single':
+			return 80;
+		case 'Double':
+			return 100;
+		case 'Triple':
+			return 120;
+		case 'Suite':
+			return 160;
+		default:
+			return 0;
+	}
+}
+
+function getRoomStars(type) {
+	switch (type) {
+		case 'Single':
+			return 3;
+		case 'Double':
+		case 'Triple':
+			return 4;
+		case 'Suite':
+			return 5;
+		default:
+			return 0;
+	}
+}
 </script>
 
 <style lang="css" >
