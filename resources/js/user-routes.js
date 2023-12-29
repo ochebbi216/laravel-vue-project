@@ -32,7 +32,7 @@ export const user_routes = [
     },
     {
         name:'RoomDetails',
-        path:'/roomdetails',
+        path:'/roomdetails/:id',
         component:RoomDetails
     },
     {

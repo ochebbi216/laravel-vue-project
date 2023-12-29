@@ -23,7 +23,7 @@
                         <!-- Ajoutez d'autres détails selon vos besoins -->
                     </div>
                     <div v-else>
-                        <p>Aucune réclamation trouvée.</p>
+                        <p>Aucune réclamation trouvée pour ce id.</p>
                     </div>
                 </div>
             </div>

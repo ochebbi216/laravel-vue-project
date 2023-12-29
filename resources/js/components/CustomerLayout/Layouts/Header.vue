@@ -10,23 +10,23 @@
 
 				<div class="collapse navbar-collapse" id="ftco-nav">
 					<ul class="navbar-nav ml-lg-5" >
-						<li class="nav-item"><router-link :to="{ name: 'Acceuil' }" class="nav-link" style="font-size: 17px;"> Home</router-link></li>
-						<li class="nav-item"><router-link :to="{ name: 'Room' }" class="nav-link" style="font-size: 17px;">Our Rooms</router-link></li>
-						<li class="nav-item"><a href="restaurant.html" class="nav-link" style="font-size: 17px;">Reservations</a></li>
-						<li class="nav-item"><a href="restaurant.html" class="nav-link" style="font-size: 17px;">Complaints</a></li>
-						<li class="nav-item"><a href="about.html" class="nav-link" style="font-size: 17px;">About Us</a></li>
+						<li class="nav-item"><router-link :to="{ name: 'Acceuil' }" class="nav-link" style="font-size: 16px;"> Home</router-link></li>
+						<li class="nav-item"><router-link :to="{ name: 'Room' }" class="nav-link" style="font-size: 16px;">Our Rooms</router-link></li>
+						<li class="nav-item"><a href="restaurant.html" class="nav-link" style="font-size: 16px;">Reservations</a></li>
+						<li class="nav-item"><a href="restaurant.html" class="nav-link" style="font-size: 16px;">Complaints</a></li>
+						<li class="nav-item"><a href="about.html" class="nav-link" style="font-size: 16px;">About Us</a></li>
 
 					</ul>
 					<ul class="navbar-nav float-right" style="margin-left: 10%;">
 
 						<li v-if="!token" class="nav-item">
-							<router-link :to="{ name: 'Register' }" class="nav-link" style="font-size: 17px;"> Register</router-link>
+							<router-link :to="{ name: 'Register' }" class="nav-link" style="font-size: 16px;"> Register</router-link>
 						</li>
 						<li v-if="!token" class="nav-item">
-							<router-link :to="{ name: 'Login' }" class="nav-link" style="font-size: 17px;"> Login</router-link>
+							<router-link :to="{ name: 'Login' }" class="nav-link" style="font-size: 16px;"> Login</router-link>
 						</li>
 						<li v-else class="nav-item">
-							<a href="#" @click="logout" class="nav-link" style="font-size: 17px;margin-left: 15%;">Logout </a>
+							<a href="#" @click="logout" class="nav-link" style="font-size: 16px;margin-left: 15%;">Logout </a>
 						</li>
 					</ul>
 				</div>
