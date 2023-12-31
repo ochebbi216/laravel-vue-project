@@ -6,11 +6,13 @@ import Reservation from './components/CustomerLayout/Reservations/Reservation.vu
 import Payment from './components/CustomerLayout/Payment/Payment.vue';
 import Reclamation from './components/CustomerLayout/Reclamation/Reclamation.vue';
 import RoomDetails from './components/CustomerLayout/Rooms/RoomDetails.vue';
+import AddReservation from './components/CustomerLayout/Reservations/AddResevation.vue';
 export const user_routes = [
     {
         name:'Acceuil',
         path:'/',
         component:Acceuil,
+
     },
     {
         name:'Login',
@@ -38,6 +40,12 @@ export const user_routes = [
         name:'Reservation',
         path:'/resevervation',
         component:Reservation
+    },
+    {
+        path: '/addreservation/:roomId', // You can still pass the room ID for reference
+        name: 'AddReservation',
+        component: AddReservation,
+        props: route => ({ room: route.params.room }) // Pass the room object as a prop
     },
     {
         name:'Payment',

@@ -5,6 +5,8 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReclamationReservationController;
+use App\Http\Controllers\PaymentController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
@@ -39,6 +41,11 @@ Route::middleware('api')->group(function () {
 
 Route::get('/reservationHistory/{id}', [UserController::class, 'reservationHistory']);
 
+Route::middleware('api')->group(function($router) {
+
+    Route::post('/createpayment', [PaymentController::class,'createPaymentIntent']);
+    
+    });
 
 Route::post('/admin/register', [AdminController::class, 'register']);
 Route::post('/admin/login', [AdminController::class, 'login']);

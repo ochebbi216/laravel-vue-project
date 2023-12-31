@@ -61,7 +61,7 @@
                     <div v-for="(room, index) in filteredRooms" :key="room.id" class="col-lg-6">
                         <div class="room-wrap d-md-flex">
                             <!-- Use dynamic class binding to alternate image positions -->
-                            <a :href="room.detailsLink" :class="{ 'order-md-last': index % 2 >= 1 }" class="img"
+                            <a href="" :class="{ 'order-md-last': index % 2 >= 1 }" class="img"
                                 :style="{ 'background-image': 'url(' + room.image + ')' }"></a>
                             <!-- Use dynamic class binding to alternate arrow styles -->
                             <div
@@ -80,14 +80,14 @@
                                     <h3 class="mb-3"><a href="">{{ room.room_type }}</a></h3>
 
                                     <p class="pt-1">
-                                        <a @click="Details(room.id)" href="" class="btn-custom px-3 py-2 rounded"> View
+                                        <a @click="Details(room.id)" href="#" class="btn-custom px-3 py-2 rounded"> View
                                             Details <i class="fa-solid fa-circle-info"></i></a>
                                     </p>
                                     <p v-if="!isAvailable(room.id)" class="pt-1 text-danger">
                                         Available from <span>{{ getNextAvailableDate(room.id) }}</span>
                                     </p>
                                     <p v-else class="pt-1">
-                                        <a href="" class="btn-info active px-3 py-2 rounded">Get Room Now!
+                                        <a href="" @click.prevent="ToReservation(room.id)" class="btn-info active px-3 py-2 rounded">Get Room Now!
                                             <i class="fa-solid fa-circle-arrow-right"></i></a>
                                     </p>
                                 </div>
@@ -111,8 +111,13 @@ const rooms = ref([]);
 const reservations = ref([]);
 const router = useRouter();
 let show = ref(false);
+
 const openFilter = () => {
     show.value = !show.value;
+}
+
+const ToReservation = (id_room) => {
+    router.push({ name: 'AddReservation', params: { roomId: id_room } });
 }
 
 const getRooms = async () => {

@@ -174,7 +174,6 @@ class ReservationController extends Controller
      */
     private function calculateTotalCost(Request $request ,$type)
     {
-        // Dummy implementation - replace with your actual cost calculation logic
         $dailyRates = [
             'Single' => [
                 'demi-pension' => 100,
@@ -200,7 +199,6 @@ class ReservationController extends Controller
                 'lpd' => 160,
                 'all-inclusive' => 300,
             ],
-            // other room type rates
         ];
 
         $checkIn = Carbon::parse($request->checkin);

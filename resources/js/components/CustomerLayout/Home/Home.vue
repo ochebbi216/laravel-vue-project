@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="hero bgi">
+		<div class="hero bgi ">
 			<section class="home-slider ">
 				<div class="slider-item ">
 					<div class="overlay"></div>
@@ -92,9 +92,11 @@
 
 		<!-- Result View -->
 		<div class="row no-gutters mt-5" v-if="show">
+
 			<div class="col-lg-12 text-center">
-    		<h2 class="mt-5 mb-4">{{ rooms.length }} properties found:</h2>	
-			</div>			
+				<h2 class="mt-5 mb-4" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span
+						style="color: rgb(33, 204, 142);">{{ rooms.length }}</span> properties found:</h2>
+			</div>
 			<div v-if="rooms.length === 1" class="col-lg-6 offset-lg-3">
 				<div href="#" class="room-wrap d-md-flex">
 					<a @click.prevent="Details(rooms[0].id)" class="img"
@@ -110,12 +112,12 @@
 								<span class="price mr-1">From {{ getRoomPrice(rooms[0].room_type) }} DT</span>
 								<span class="per">per night</span>
 							</p>
-							<h3 class="mb-3"><a href="#">{{ rooms[0].room_type }}</a></h3>
+							<h3 class="mb-3">{{ rooms[0].room_type }}</h3>
 							<p class="pt-1"><a href="#" @click.prevent="Details(rooms[0].id)"
-									class="btn-custom px-3 py-2 rounded">View Details <span
-										class="ion-ios-arrow-forward"></span></a></p>
+									class="btn-custom px-3 py-2 rounded">View Details <i class="fa-solid fa-circle-info"></i></a></p>
+
 							<p class="pt-1">
-								<a href="" class="btn-info active px-3 py-2 rounded">Get Room Now! <i
+								<a href="#" @click.prevent="ToReservation(rooms[0].id)" class="btn-info active px-3 py-2 rounded">Get Room Now! <i
 										class="fa-solid fa-circle-arrow-right"></i></a>
 							</p>
 						</div>
@@ -142,7 +144,7 @@
 							<p class="pt-1"><a @click.prevent="Details(room.id)" class="btn-custom px-3 py-2 rounded">View
 									Details <span class="ion-ios-arrow-forward"></span></a></p>
 							<p class="pt-1">
-								<a href="" class="btn-info active px-3 py-2 rounded">Get Room Now! <i
+								<a href="" @click.prevent="ToReservation()" class="btn-info active px-3 py-2 rounded">Get Room Now! <i
 										class="fa-solid fa-circle-arrow-right"></i></a>
 							</p>
 						</div>
@@ -464,6 +466,7 @@
 			</div>
 		</section>
 	</div>
+
 </template>
 
 <script setup>
@@ -492,43 +495,12 @@ const Details = (id) => {
 	router.push({ name: 'RoomDetails', params: { id } });
 
 };
-// function getRoomPrice(type) {
-//   const dailyRates = {
-//     'Single': {
-//       'demi-pension': 100,
-//       'pension-complete': 150,
-//       'lpd': 80,
-//       'all-inclusive': 200,
-//     },
-//     'Double': {
-//       'demi-pension': 120,
-//       'pension-complete': 170,
-//       'lpd': 100,
-//       'all-inclusive': 220,
-//     },
-//     'Triple': {
-//       'demi-pension': 140,
-//       'pension-complete': 190,
-//       'lpd': 120,
-//       'all-inclusive': 240,
-//     },
-//     'Suite': {
-//       'demi-pension': 180,
-//       'pension-complete': 230,
-//       'lpd': 160,
-//       'all-inclusive': 300,
-//     },
-//     // other room type rates
-//   };
 
-//   if (type in dailyRates) {
-//     // Here, you can return the specific rate based on the room type
-//     return dailyRates[type]['lpd']; // Adjust 'lpd' to the desired rate type
-//   }
-
-//   return 0; // Return 0 for an unknown room type or handle it as required
-// }
-
+const ToReservation = () => {
+	// const selectedRoom = rooms.value.find(room => room.id === id_room);
+	router.push({ name: 'AddReservation' });
+	// , params: { roomDetails: selectedRoom }
+}
 function getRoomPrice(type) {
 	switch (type) {
 		case 'Single':

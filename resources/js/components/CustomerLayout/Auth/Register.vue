@@ -97,4 +97,5 @@ const handleSubmit = async () => {
     position: relative;
     z-index: 2;
     /* Higher than the background image */
-}</style>
+}
+</style>
