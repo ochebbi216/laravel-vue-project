@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Reservation;
+use App\Models\ReclamationReservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -94,7 +95,7 @@ class UserController extends Controller
             ], 200);
         }
         else{
-            return response()->json('The provided credentials are incorrect.', 400);
+            return response()->json('The provided user credentials are incorrect.', 400);
         }
         }
     public function logout(Request $request)
@@ -121,15 +122,17 @@ class UserController extends Controller
 
     public function reservationHistory($id)
     {
-        $reservations = Reservation::with(['room', 'user'])->where('id_user', $id)->get();
+        $reservations = Reservation::with(['room', 'user'])->withTrashed()->where('id_user', $id)->get();
     
-        if ($reservations->isEmpty()) {
-            return response()->json('This user has no reservations.', 404);
-        }
-        
         return response()->json($reservations);
     }
-
+    public function reclamationHistory($id)
+    {
+        $reclamation = ReclamationReservation::with(['reservation','user'])->where('user_id', $id)->get();
+    
+        
+        return response()->json($reclamation);
+    }
     public function addToBlacklist($id)
     {
         // ... Assuming this function will just ban the user ...

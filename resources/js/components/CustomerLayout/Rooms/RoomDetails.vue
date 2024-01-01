@@ -1,5 +1,8 @@
 <template>
-    <div>
+    <div v-if="isLoading" class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class=" spinner-border " style="color: rgb(0, 150, 136);"></div>
+    </div>
+    <div v-else>
         <div class="hero-wrap" :style="{ backgroundImage: 'url(../../../userAssets/images/bg_2.jpg)' }">
       <div class="overlay"></div>
       <div class="container">
@@ -46,7 +49,6 @@
           	</div>
           </div> <!-- .col-md-8 -->
           <div class="col-lg-4 sidebar  pl-md-5">
-
             <div class="sidebar-box ">
               <div class="categories">
                 <h3>Categories</h3>
@@ -54,7 +56,6 @@
                 <li><a href="#">Double <span>({{ categories.Double }})</span></a></li>
                 <li><a href="#">Triple <span>({{ categories.Triple }})</span></a></li>
                 <li><a href="#">Suite <span>({{ categories.Suite }})</span></a></li>
-
               </div>
             </div>
 
@@ -105,6 +106,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter, useRoute } from 'vue-router';
+const isLoading = ref(true)
 
 const room = ref(null);
 const categories = ref({
@@ -114,12 +116,14 @@ const categories = ref({
   Suite: 0
 });
 const route = useRoute();
-const isLoading = ref(true)
 
 const loadRoomDetails = async () => {
+  isLoading.value = true;
+
     try {
         const res = await axios.get(`http://localhost:8000/api/rooms/${route.params.id}`);
         room.value = res.data;
+        isLoading.value = false;
     } catch (err) {
         console.error(err);
     }
@@ -168,6 +172,7 @@ function RoomSize(type) {
 onMounted(() => {
   loadRoomDetails();
   loadCategoryCounts();
+
 });
 </script>
 

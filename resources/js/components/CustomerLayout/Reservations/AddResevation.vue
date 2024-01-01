@@ -1,6 +1,18 @@
 <template>
-    <div class="bgiadd"></div>
 
+    <div class="bgiadd"></div>
+        <div class="hero-wrap ">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
+                    <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+                        <div class="text">
+                            <h3 class="mb-4 bread">No need more than 2 min to get your Reservation ! </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-5 mx-auto">
@@ -77,7 +89,7 @@ const route = useRoute();
 const show = ref(false);
 const stripe = ref(null);
 const user = ref({});
-// Immediately attempt to parse the user data from localStorage
+// get user data from localStorage
 const storedUser = localStorage.getItem('user');
 if (storedUser) {
   user.value = JSON.parse(storedUser);
@@ -227,7 +239,10 @@ const addPayment = async () => {
     try {
         validateOccupancy();
         await axios.post('http://localhost:8000/api/reservations', reservation.value);
-       toast.success("Reservation was added successfully");
+        toast.success("Reservation was added successfully");
+        router.push('/reservation');
+
+
 
     } catch (error) {
         console.error(error);

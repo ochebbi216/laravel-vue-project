@@ -4,7 +4,8 @@
 		<div class="page-wrapper">
 			<div class="content container-fluid">
 				<div class="page-header">
-					<h1 class="mt-5 blank_title">Blank Page</h1> </div>
+					<h1 class="mt-5 blank_title bg-danger rounded">Blank Test Page</h1> </div>
+
 			</div>
 		</div>
                     <div class="card-header">Bienvenue dans notre site</div>

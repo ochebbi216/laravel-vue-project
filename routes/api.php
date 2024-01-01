@@ -40,6 +40,7 @@ Route::middleware('api')->group(function () {
     });
 
 Route::get('/reservationHistory/{id}', [UserController::class, 'reservationHistory']);
+Route::get('/reclamationHistory/{id}', [UserController::class, 'reclamationHistory']);
 
 Route::middleware('api')->group(function($router) {
 

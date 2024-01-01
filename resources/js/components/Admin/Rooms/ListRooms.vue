@@ -123,12 +123,15 @@ const editRoom = (id) => {
 };
 
 const deleteRoom = async (id) => {
+  if (window.confirm("Are You sure ?")) {
+
   try {
     await axios.delete(`http://localhost:8000/api/rooms/${id}`);
     getRooms();  // Refresh the list after deletion
   } catch (error) {
     console.log(error);
   }
+}
 };
 </script>
   

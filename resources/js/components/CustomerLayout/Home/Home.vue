@@ -1,5 +1,6 @@
 <template>
-	<div>
+
+    <div >
 		<div class="hero bgi ">
 			<section class="home-slider ">
 				<div class="slider-item ">
@@ -477,12 +478,15 @@ const req = ref({});
 const rooms = ref([]);
 const router = useRouter();
 const show = ref(false);
+// const isLoading = ref(false)
 
 const getRooms = async () => {
+	// isLoading.value = true;
 	try {
 		const response = await axios.get('http://localhost:8000/api/checkAvailability', {
 			params: req.value
 		});
+		// isLoading.value = false;
 		rooms.value = response.data.available_rooms;
 		show.value = true;
 		console.log(response.data)

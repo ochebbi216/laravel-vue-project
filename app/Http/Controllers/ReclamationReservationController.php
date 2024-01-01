@@ -38,7 +38,7 @@ class ReclamationReservationController extends Controller
 
     public function show($id)
     {
-        $reclamation = ReclamationReservation::with(['user'])->find($id);
+        $reclamation = ReclamationReservation::with(['reservation','user'])->find($id);
         if (!$reclamation) {
             return response()->json(['message' => 'Reclamation not found'], 404);
         }

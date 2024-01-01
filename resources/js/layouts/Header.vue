@@ -111,7 +111,7 @@
 		<div class="sidebar-inner slimscroll">
 			<div id="sidebar-menu" class="sidebar-menu">
 				<ul>
-					<li> <router-link to="/"><i class="fas fa-tachometer-alt"></i> 
+					<li> <router-link to="/dashboard"><i class="fas fa-tachometer-alt"></i> 
 						<span>Dashboard</span></router-link>
 					
 					</li>

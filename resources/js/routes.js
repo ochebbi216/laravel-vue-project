@@ -7,11 +7,13 @@ import ListUser from './components/Admin/User/ListUsers.vue';
 import BlackListUsers from './components/Admin/User/BlackListUser.vue';
 import Reclamation from './components/Admin/Reclamations/Reclamation.vue';
 import DetaisReclamation from'./components/Admin/Reclamations/DetailsReclamation.vue';
+import Login from './components/Admin/Auth/Login.vue';
+// import NotFound from './layouts/NotFound.vue';
 
 export const routes = [
     {
         name: 'dashboard',
-        path: '/',
+        path: '/dashboard',
         component: Dashboard
     },
     {
@@ -54,5 +56,14 @@ export const routes = [
         path: '/Detailsrec/:id',
         component: DetaisReclamation
     },
+    {
+        name:'login',
+        path :'/login',
+        component: Login,
+    },
+    // { 
+    //     path: '/:catchAll(.*)', 
+    //     component: NotFound 
+    // }
 
 ];

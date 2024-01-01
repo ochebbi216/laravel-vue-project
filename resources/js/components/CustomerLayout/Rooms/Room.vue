@@ -1,5 +1,8 @@
 <template>
-    <div>
+    <div v-if="isLoading" class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class=" spinner-border " style="color: rgb(0, 150, 136);"></div>
+    </div>
+    <div v-else>
         <div class="hero-wrap bgroom">
             <div class="overlay"></div>
             <div class="container">
@@ -80,7 +83,7 @@
                                     <h3 class="mb-3"><a href="">{{ room.room_type }}</a></h3>
 
                                     <p class="pt-1">
-                                        <a @click="Details(room.id)" href="#" class="btn-custom px-3 py-2 rounded"> View
+                                        <a @click="Details(room.id)" href="#" class="btn-custom rounded px-3 py-2 rounded"> View
                                             Details <i class="fa-solid fa-circle-info"></i></a>
                                     </p>
                                     <p v-if="!isAvailable(room.id)" class="pt-1 text-danger">
@@ -106,7 +109,7 @@ import { useRouter } from 'vue-router';
 import axios from 'axios';
 const selectedCategories = ref(['Single', 'Double', 'Triple', 'Suite']);
 const onlyAvailable = ref(false);
-// const isLoading = ref(true)
+const isLoading = ref(true)
 const rooms = ref([]);
 const reservations = ref([]);
 const router = useRouter();
@@ -124,7 +127,7 @@ const getRooms = async () => {
     await axios.get("http://localhost:8000/api/rooms")
         .then(res => {
             rooms.value = res.data;
-            // isLoading.value = false;
+            isLoading.value = false;
 
         })
         .catch(error => {
@@ -199,6 +202,7 @@ const Details = (id) => {
 onMounted(() => {
     getRooms();
     fetchReservations();
+
 });
 const isAvailable = (roomId) => {
     const currentDate = new Date();

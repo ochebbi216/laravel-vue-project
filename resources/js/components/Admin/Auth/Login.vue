@@ -9,16 +9,16 @@
                     <form @submit.prevent="handleLogin">
                         <div class="form-group">
                             <label for="email" class="text-white">Email Address</label>
-                            <input id="email" type="email" class="form-control rounded-pill " v-model="user.email" required>
+                            <input id="email" type="email" class="form-control rounded-pill " v-model="admin.email" required>
                         </div>
                         <div class="form-group">
                             <label for="password" class="text-white">Password</label>
-                            <input id="password" type="password" class="form-control rounded-pill " v-model="user.password"
+                            <input id="password" type="password" class="form-control rounded-pill " v-model="admin.password"
                                 required>
                         </div>
-                        <div class="float-right">
+                        <!-- <div class="float-right">
                             <router-link class="text-white" :to="{ name: 'Register' }">Not registered yet?</router-link>
-                        </div>
+                        </div> -->
                         <br>
                         <div class="text-center mt-4">
                             <button type="submit" class="btn btn-primary rounded-pill"> &nbsp; Login &nbsp; </button>
@@ -39,30 +39,24 @@ const toast = useToast();
 // const isLoading = ref(false)
 
 const router = useRouter();
-const user = reactive({ email: '', password: '' }); // initialize the reactive object with properties
+const admin = reactive({ email: '', password: '' }); // initialize the reactive object with properties
 
 const handleLogin = async () => {
-    // isLoading.value = true;
-
     try {
-        const res = await axios.post('http://localhost:8000/api/user/login', user);
-        
-        if(res.data.user.banned){
-            toast.error("Your account has been banned!");
-            return;
+        const res = await axios.post('http://localhost:8000/api/admin/login', admin);
+        if (res.data.status) {
+            localStorage.setItem('admintoken', res.data.admintoken);
+            toast.success(res.data.message);
+            router.push({ name: 'dashboard' });
+        } else {
+            toast.error(res.data.error || "Login failed");
         }
-        // Save the user's information and token in localStorage
-        localStorage.setItem('user', JSON.stringify(res.data.user));
-        localStorage.setItem('token', res.data.token);
-        
-        // Redirect the user after login
-        router.push({ name: 'Acceuil' }); // assuming the route name after login is 'Dashboard'
     } catch (err) {
         console.error(err);
-        toast.error("Invalid credentials");
-
+        toast.error(err.response?.data?.error || "Invalid credentials");
     }
 };
+
 </script>
   
 <style>

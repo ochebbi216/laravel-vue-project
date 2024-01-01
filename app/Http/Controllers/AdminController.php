@@ -42,21 +42,23 @@ class AdminController extends Controller
         'password' => 'required',
     ]);
 
-    if (Auth::guard('admin')->attempt($request->only('email', 'password'))) {
-        $admin = Auth::guard('admin')->user();
-        $token = $admin->createToken('admin-token-name')->plainTextToken;
-        return response()->json([
-            'status' => true,
-            'message' => 'Admin Logged In Successfully',
-            'admintoken' => $token,
-            'admin' => $admin,
-        ], 200);
+    $admin = Admin::where('email', $request->input('email'))->first();
+
+    if (!$admin || !Hash::check($request->input('password'), $admin->password)) {
+        return response()->json(['error' => 'The provided credentials are incorrect.'], 401);
     }
 
-    throw ValidationException::withMessages([
-        'email' => ['The provided credentials are incorrect.'],
-    ]);
+    $token = $admin->createToken('token-name2')->plainTextToken;
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Admin Logged In Successfully',
+        'admintoken' => $token,
+        'admin' => $admin,
+    ], 200);
 }
+
+           
 public function logout(Request $request)
 {
     $request->user()->tokens()->delete();

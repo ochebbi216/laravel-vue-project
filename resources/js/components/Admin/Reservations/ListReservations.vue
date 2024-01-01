@@ -148,17 +148,19 @@ onMounted(() => {
     fetchReservations();
 });
 const deleteReservation = async (id) => {
+    if (window.confirm("Are You sure ?")) {
+        updateReservationStatus(id, 'deleted');
+
     await axios.delete(`/api/reservations/${id}`)
         .then(() => {
             // Using a filter function to remove the reservation from the list
-            reservations.value = reservations.value.filter(reservation => reservation.id !== id);
-            // updateReservationStatus(id, 'deleted');
-
+            fetchReservations();
 
         })
         .catch(error => {
             console.error('Erreur lors de la suppression de la réservation:', error);
         });
+    }
 };
 const updateReservationStatus = async (reservationId, status) => {
     await axios.put(`/api/reservations/${reservationId}`, { status })

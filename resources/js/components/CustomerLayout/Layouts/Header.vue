@@ -45,7 +45,8 @@
 import { ref, onMounted ,computed} from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-
+import { useToast } from 'vue-toastification';
+const toast = useToast();
 const router = useRouter();
 const token = ref(localStorage.getItem('token'));
 const user = ref({});
@@ -68,7 +69,8 @@ const logout = async () => {
     console.log(response);
   } catch (err) {
     console.error(err);
-    alert("Error during logout");
+	toast.error("Error during logout");
+
   } finally {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
