@@ -21,7 +21,7 @@
                         </div> -->
                         <br>
                         <div class="text-center mt-4">
-                            <button type="submit" class="btn btn-primary rounded-pill"> &nbsp; Login &nbsp; </button>
+                            <button type="submit" class="btn btn-primary veiwbutton rounded-pill"> &nbsp; Login &nbsp; </button>
                         </div>
                     </form>
                 </div>
@@ -61,7 +61,7 @@ const handleLogin = async () => {
   
 <style>
 .bgim2 {
-    background-image: url('../../../../../public/userAssets/images/bg_4.jpg');
+    background-image: url('../../../../../public/assets/img/adminbg.png');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;

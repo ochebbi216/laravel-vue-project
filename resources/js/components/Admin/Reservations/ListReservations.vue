@@ -5,11 +5,8 @@
             <div class=" spinner-border " style="color: rgb(0, 150, 136);"></div>
         </div>
         <div v-else  class="page-wrapper bg" >
-           
             <div class="content container-fluid">
-                
                 <div class="page-header">
-
                     <div class="row align-items-center">
                         <div class="col">
                             <div class="mt-5">
