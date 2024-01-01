@@ -47,8 +47,8 @@
                                                         style="background-color: rgb(1, 177, 1);color: aliceblue;">Complete</span>
                                                 </td>
                                                 <td>{{ formatDate(rec.created_at) }}</td>
-                                                <td><button class="btn btn-outline-warning mx-2" @click="Details(rec.id)"><i
-                                                            class="fa-regular fa-pen-to-square"></i> Details</button></td>
+                                                <td><button class="btn btn-outline-warning mx-2" @click="Details(rec.id)">
+                                                    <i class="fa-solid fa-circle-info"></i> Details</button></td>
                                             </tr>
                                         </tbody>
                                     </table>

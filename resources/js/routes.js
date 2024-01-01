@@ -14,50 +14,67 @@ export const routes = [
     {
         name: 'dashboard',
         path: '/dashboard',
-        component: Dashboard
+        component: Dashboard,
+        meta : {isAuthAdmin:true }
     },
     {
         name: 'rooms',
         path: '/rooms',
-        component: Rooms
+        component: Rooms,
+        meta : {isAuthAdmin:true }
+
     },
     {
         name: 'addroom',
         path: '/addroom',
-        component: AddRoom
+        component: AddRoom,
+        meta : {isAuthAdmin:true }
+
     },
     {
         name: 'editroom',
         path: '/editroom/:id',
-        component: EditRoom
+        component: EditRoom,
+        meta : {isAuthAdmin:true }
+
     },
     {
         name: 'reservations',
         path: '/reservations',
-        component: Reservations
+        component: Reservations,
+        meta : {isAuthAdmin:true }
+
     },
     {
         name: 'listuser',
         path: '/listuser',
-        component: ListUser
+        component: ListUser,
+        meta : {isAuthAdmin:true }
+
     },
     {
         name: 'blackListUsers',
         path: '/blackListUsers',
-        component: BlackListUsers
+        component: BlackListUsers,
+        meta : {isAuthAdmin:true }
+
     },
     {
         name: 'reclamations',
         path: '/reclamations',
-        component: Reclamation
+        component: Reclamation,
+        meta : {isAuthAdmin:true }
+
     },
     {
         name: 'detailsrec',
         path: '/Detailsrec/:id',
-        component: DetaisReclamation
+        component: DetaisReclamation,
+        meta : {isAuthAdmin:true }
+
     },
     {
-        name:'login',
+        name:'Login',
         path :'/login',
         component: Login,
     },

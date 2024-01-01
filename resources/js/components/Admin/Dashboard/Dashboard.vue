@@ -1,7 +1,11 @@
 <template >
+
     <div>
         <Header></Header>
-        <div class="">
+        <div v-if="isLoading" class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+            <div class=" spinner-border " style="color: rgb(0, 150, 136);"></div>
+        </div>
+        <div v-else class="">
 
             <div class="page-wrapper">
                 <div class="content container-fluid bg">
@@ -21,7 +25,7 @@
                                 <div class="card-body">
                                     <div class="dash-widget-header">
                                         <div>
-                                            <h3 class="card_widget_header">236</h3>
+                                            <h3 class="card_widget_header">{{ reservations.length }}</h3>
                                             <h6 class="text-muted">Total Reservations</h6>
                                         </div>
                                         <div class="ml-auto mt-md-3 mt-lg-0"> <span class="opacity-7 text-muted">
@@ -42,7 +46,7 @@
                                 <div class="card-body">
                                     <div class="dash-widget-header">
                                         <div>
-                                            <h3 class="card_widget_header">180</h3>
+                                            <h3 class="card_widget_header">{{rooms.length}}</h3>
                                             <h6 class="text-muted">Total Rooms</h6>
                                         </div>
                                         <div class="ml-auto mt-md-3 mt-lg-0"> <span class="opacity-7 text-muted">
@@ -57,7 +61,7 @@
                                 <div class="card-body">
                                     <div class="dash-widget-header">
                                         <div>
-                                            <h3 class="card_widget_header">1538</h3>
+                                            <h3 class="card_widget_header">{{ reclamations.length }}</h3>
                                             <h6 class="text-muted">Total Complaints</h6>
                                         </div>
                                         <div class="ml-auto mt-md-3 mt-lg-0"> <span class="opacity-7 text-muted">
@@ -72,7 +76,7 @@
                                 <div class="card-body">
                                     <div class="dash-widget-header">
                                         <div>
-                                            <h3 class="card_widget_header">364</h3>
+                                            <h3 class="card_widget_header">{{ tot_revenu }} DT</h3>
                                             <h6 class="text-muted">total revenue</h6>
                                         </div>
                                         <div class="ml-auto mt-md-3 mt-lg-0"> <span class="opacity-7 text-muted"><svg
@@ -94,7 +98,7 @@
                                 <div class="card-body">
                                     <div class="dash-widget-header">
                                         <div>
-                                            <h3 class="card_widget_header">236</h3>
+                                            <h3 class="card_widget_header">{{ actual_res.length }}</h3>
                                             <h6 class="text-muted">Actual Reservations </h6>
                                         </div>
                                         <div class="ml-auto mt-md-3 mt-lg-0"> <span class="opacity-7 text-muted">
@@ -112,8 +116,8 @@
                                 <div class="card-body">
                                     <div class="dash-widget-header">
                                         <div>
-                                            <h3 class="card_widget_header">180</h3>
-                                            <h6 class="text-muted">Booked Rooms now</h6>
+                                            <h3 class="card_widget_header">{{availableRoomsCount}}</h3>
+                                            <h6 class="text-muted">Available Rooms</h6>
                                         </div>
                                         <div class="ml-auto mt-md-3 mt-lg-0"> <span class="opacity-7 text-muted">
                                             <i class="fa-solid fa-bed"></i>
@@ -128,7 +132,7 @@
                                 <div class="card-body">
                                     <div class="dash-widget-header">
                                         <div>
-                                            <h3 class="card_widget_header">1538</h3>
+                                            <h3 class="card_widget_header">{{users.length}}</h3>
                                             <h6 class="text-muted">Total Customers </h6>
                                         </div>
                                         <div class="ml-auto mt-md-3 mt-lg-0"> <span class="opacity-7 text-muted">
@@ -143,7 +147,7 @@
                                 <div class="card-body">
                                     <div class="dash-widget-header">
                                         <div>
-                                            <h3 class="card_widget_header">364</h3>
+                                            <h3 class="card_widget_header">{{blacklist.length}}</h3>
                                             <h6 class="text-muted">Black List Customers</h6>
                                         </div>
                                         <div class="ml-auto mt-md-3 mt-lg-0"> <span class="opacity-7 text-muted">
@@ -183,11 +187,96 @@
 
 <script setup>
 import Header from "../../../layouts/Header.vue";
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import { useRouter, useRoute } from 'vue-router';
-// const isLoading = ref(false);
+const reclamations = ref([]);
+const reservations = ref([]);
+const rooms = ref([]);
+const users = ref([]);
+const blacklist = ref([]);
+const tot_revenu = ref(0);
+const actual_res = ref([])
+const isLoading = ref(false);
+const fetchReclamations = async () => {
+	await axios.get('http://localhost:8000/api/reclamation')
+		.then(res => {
+			// reclamations.value = res.data.filter(reclamation_reservations => reclamation_reservations.status === 0);
+            reclamations.value = res.data;
+		})
+		.catch(error => {
+			console.error('Error fetching reclamations:', error);
+		})
+};
+const getRooms = async () => {
+  await axios.get("http://localhost:8000/api/rooms")
+    .then(res => {
+      rooms.value = res.data;
+    //   isLoading.value = false; 
 
+    })
+    .catch(error => {
+      console.log(error);
+    });
+};
+const fetchReservations = async () => {
+    try {
+        const res = await axios.get('http://localhost:8000/api/reservations');
+        reservations.value = res.data;
+
+        let totalRevenue = 0;
+        reservations.value.forEach(reservation => {
+             totalRevenue += reservation.total_cost;
+        });
+
+        tot_revenu.value = totalRevenue; 
+        const currentDate = new Date();
+        actual_res.value = reservations.value.filter(reservation => {
+            const checkinDate = new Date(reservation.checkin);
+            const checkoutDate = new Date(reservation.checkout);
+            return checkinDate <= currentDate && checkoutDate >= currentDate;
+        });
+    } catch (error) {
+        console.error('Error fetching reservations:', error);
+    }
+};
+const fetchUsers = async () => {
+    try {
+        const response = await axios.get('http://localhost:8000/api/users');
+        users.value = response.data;
+        blacklist.value = response.data.filter(users => users.banned === 1);
+
+
+    } catch (error) {
+        console.error('There was a problem fetching the user list:', error);
+    }
+};
+onMounted(async () => {
+    isLoading.value = true; // Set isLoading to true when the component is mounted
+
+    // Wait for all async operations to complete
+    await Promise.all([
+        fetchReservations(),
+        getRooms(),
+        fetchReclamations(),
+        fetchUsers()
+    ]);
+
+    isLoading.value = false; // Set isLoading to false after all operations are complete
+});
+const isAvailable = (roomId) => {
+  const currentDate = new Date();
+  return !reservations.value.some((reservation) => {
+    return reservation.id_room === roomId &&
+           reservation.deleted_at === null &&
+           new Date(reservation.checkin) <= currentDate &&
+           currentDate <= new Date(reservation.checkout);
+  });
+};
+
+const availableRoomsCount = computed(() => {
+  return rooms.value.filter(room => isAvailable(room.id)).length;
+});
 </script>
 
 <style ></style>

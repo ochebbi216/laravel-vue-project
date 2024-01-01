@@ -94,9 +94,9 @@
 							<p class="text-muted mb-0">Administrator</p>
 						</div>
 					</div> 
-					<a class="dropdown-item" href="profile.html">My Profile</a> 
+					<a class="dropdown-item disabled" href="profile.html" >My Profile</a> 
 					<!-- <a class="dropdown-item" href="settings.html">Account Settings</a> -->
-						 <a class="dropdown-item" href="login.html">Logout</a>
+					<a class="dropdown-item " @click="logout" href="#"  >Logout</a>
 				</div>
 			</li>
 		</ul>
@@ -151,23 +151,46 @@
 </template>
 
 <script setup>
-// import '../../../public/assets/js/jquery-3.5.1.min.js';
-// import '../../../public/assets/js/popper.min.js';
-// import '../../../public/assets/js/bootstrap.min.js';
-// import '../../../public/assets/plugins/raphael/raphael.min.js';
-// import '../../../public/assets/plugins/datatables/jquery.dataTables.min.js';
-// import '../../../public/assets/plugins/datatables/datatables.min.js';
-// // import '../../../public/assets/js/moment.min.js';
 
-// import '../../../public/assets/plugins/slimscroll/jquery.slimscroll.min.js';
-// import '../../../public/assets/plugins/raphael/raphael.min.js';
-// import '../../../public/assets/plugins/morris/morris.min.js';
-// import '../../../public/assets/js/chart.morris.js';
-// import '../../../public/assets/js/script.js';
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import axios from 'axios';
-
+import { useToast } from 'vue-toastification';
+const toast = useToast();
+const router = useRouter();
+const token = ref(localStorage.getItem('admintoken'));
 const reclamations = ref([]);
+
+// const user = ref({});
+// // get data from localStorage
+// const storedUser = localStorage.getItem('user');
+// if (storedUser) {
+//   user.value = JSON.parse(storedUser);
+// }
+// const userName = user.value.name
+
+const logout = async () => {
+  try {
+    const response = await axios.post('http://localhost:8000/api/admin/logout', null, {
+      headers: {
+        'Authorization': `Bearer ${token.value}`
+      }
+    });
+	
+    console.log(response);
+  } catch (err) {
+    console.error(err);
+	toast.error("Error during logout");
+
+  } finally {
+    localStorage.removeItem('admintoken');
+    // localStorage.removeItem('user');
+    token.value = ''; // Reset the token
+    router.push({ name: 'Login' }); // Redirect to login
+  }
+};
+
+
 
 const fetchReclamations = async () => {
 	await axios.get('http://localhost:8000/api/reclamation')

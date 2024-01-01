@@ -14,12 +14,12 @@ router.beforeEach((to, from, next) => {
     let token = localStorage.getItem('admintoken');
     if (to.matched.some(record => record.meta.isAuthAdmin)) {
         if (!token) {
-            next("/admin/login");
+            next("/login");
         } else {
             next(); // The user is authenticated, so the navigation can proceed
         }
-    } else if (token && (to.path === '/admin/login' || to.path === '/admin/register')) {
-        next("/"); // Redirect authenticated user to home if trying to access login/register
+    } else if (token && (to.path === '/login' || to.path === '/register')) {
+        next("/dashboard"); // Redirect authenticated user to home if trying to access login/register
     } else {
         next(); // Either the route does not require authentication, or no user is logged in
     }
