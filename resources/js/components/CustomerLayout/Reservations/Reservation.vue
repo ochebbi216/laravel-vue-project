@@ -41,12 +41,12 @@
                                     </thead>
                                     <tbody>
                                         <tr v-if="reservations.length === 0">
-                                            <td colspan="10">No such reservation added yet.</td>
+                                            <td colspan="11">No such reservation added yet.</td>
                                         </tr>
                                         <tr class="text-center" v-for="reservation in reservations" :key="reservation.id">
                                             <td>{{ reservation.id }}</td>
-                                            <td>{{ reservation.room?.room_number }}</td>
-                                            <td>{{ reservation.checkin }}</td>
+                                            <td v-if="reservation.room?.room_number!= null">{{ reservation.room?.room_number }}</td>
+                                            <td v-else class="text-muted">Not Found</td>                                            <td>{{ reservation.checkin }}</td>
                                             <td>{{ reservation.checkout }}</td>
                                             <td>{{ reservation.nbadulte }}</td>
                                             <td>{{ reservation.nbenfants }}</td>
