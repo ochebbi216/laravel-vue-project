@@ -20,7 +20,7 @@ class User extends Authenticatable
         'phone',
         'adresse',
         'password',
-        'banned', // true or false
+        'banned', // true wala false
     ];
 
     protected $hidden = [

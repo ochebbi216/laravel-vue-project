@@ -15,7 +15,7 @@ class CreateReservationsTable extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_room');
+            $table->unsignedBigInteger('id_room')->nullable(); // Define it as nullable
             $table->unsignedBigInteger('id_user'); 
             $table->date('checkin');
             $table->date('checkout');
@@ -27,9 +27,10 @@ class CreateReservationsTable extends Migration
             $table->decimal('total_cost', 10, 2); // La précision et l'échelle peuvent être ajustées selon vos besoins
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('id_room')->references('id')->on('rooms')
-                  ->onDelete('restrict')
-                  ->onUpdate('cascade');
+            $table->foreign('id_room')
+                ->references('id')
+                ->on('rooms')
+                ->onDelete('set null'); // Specify the desired behavior 
             $table->foreign('id_user')->references('id')->on('users')
                   ->onDelete('restrict')
                   ->onUpdate('cascade');

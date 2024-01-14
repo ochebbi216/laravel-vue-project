@@ -1,7 +1,8 @@
 import { createApp } from 'vue';
 import { createRouter, createWebHistory } from "vue-router";
 import { routes } from "./routes";
-// import 'bootstrap/dist/css/bootstrap.min.css'
+import PrimeVue from 'primevue/config';
+import 'primevue/resources/themes/lara-light-green/theme.css'
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import App from './App.vue'
@@ -24,5 +25,5 @@ router.beforeEach((to, from, next) => {
         next(); // Either the route does not require authentication, or no user is logged in
     }
 });
-app.use(router).use(Toast);
+app.use(router).use(PrimeVue).use(Toast);
 app.mount("#app");

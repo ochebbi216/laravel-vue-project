@@ -12,7 +12,7 @@ import AddReclamation from './components/CustomerLayout/Reclamation/AddReclamati
 export const user_routes = [
     {
         name:'Acceuil',
-        path:'/home',
+        path:'/',
         component:Acceuil,
 
     },

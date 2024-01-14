@@ -2,7 +2,7 @@ import { createApp } from 'vue';
 import { createRouter, createWebHistory } from "vue-router";
 import { user_routes } from "./user-routes";
 import PrimeVue from 'primevue/config';
-import 'primevue/resources/themes/lara-light-green/theme.css'
+
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import App from './userApp.vue';

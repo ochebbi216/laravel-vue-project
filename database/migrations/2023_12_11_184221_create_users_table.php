@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
             $table->string('phone',8)->nullable();
             $table->string('adresse')->nullable();
             $table->string('password');
-            $table->boolean('banned')->default(false); // Valeur par défaut à false
+            $table->boolean('banned')->default(false); 
             $table->rememberToken();
             $table->timestamps();
         });

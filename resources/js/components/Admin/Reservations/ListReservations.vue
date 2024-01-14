@@ -46,7 +46,8 @@
                                             <tr class="text-center" v-for="reservation in reservations" :key="reservation.id">
                                                 <td>{{ reservation.id }}</td>
                                                 <td>{{ reservation.user?.name }}</td>
-                                                <td>{{ reservation.room?.room_number }}</td>
+                                                <td v-if="reservation.room?.room_number!= null">{{ reservation.room?.room_number }}</td>
+                                                <td v-else class="text-muted">Not Found</td>
                                                 <td>{{ reservation.checkin }}</td>
                                                 <td>{{ reservation.checkout }}</td>
                                                 <td>{{ reservation.nbadulte }}</td>
@@ -103,7 +104,6 @@ const completStatusReservation = (res) => {
             updateReservationStatus(res.id, 'completed');
         }
     }
-
 }
 
 const canDeleteReservation = (reservation) => {
@@ -113,14 +113,11 @@ const canDeleteReservation = (reservation) => {
     const delDate = reservation.deleted_at ? new Date(reservation.deleted_at) : null;
     completStatusReservation(reservation);
     if (!delDate && checkInDate > currentDate) {
-        return true; // Can only delete a reservation if it's not already deleted and not yet started
-    } else if (checkInDate < currentDate || checkOutDate < currentDate || reservation.status == 'deleted' ) {
-        // Reservation is finished or dates have passed
+        return true; 
+    } else if (checkInDate <= currentDate || checkOutDate < currentDate || reservation.status == 'deleted' ) {
 
-        return false; // Cannot delete a finished reservation
+        return false; 
     }
-
-
     else if (delDate !== null){
         if (reservation.status !== 'deleted') {
             reservation.status = 'deleted';

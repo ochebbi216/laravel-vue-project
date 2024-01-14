@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Carbon\Carbon;
+use App\Rules\CheckInDate;
 
 class ReservationController extends Controller
 {
@@ -44,7 +45,7 @@ class ReservationController extends Controller
         $validatedData = $request->validate([
             'id_room' => 'required|exists:rooms,id',
             'id_user' => 'required|exists:users,id',
-            'checkin' => 'required|date',
+            'checkin' => ['required', 'date', 'after:today', new CheckInDate],
             'checkout' => 'required|date|after:checkin',
             'nbadulte' => 'required|integer:1',
             'nbenfants' => 'required|integer:0',
