@@ -8,7 +8,7 @@ import BlackListUsers from './components/Admin/User/BlackListUser.vue';
 import Reclamation from './components/Admin/Reclamations/Reclamation.vue';
 import DetaisReclamation from'./components/Admin/Reclamations/DetailsReclamation.vue';
 import Login from './components/Admin/Auth/Login.vue';
-// import NotFound from './layouts/NotFound.vue';
+import NotFound from './components/NotFound.vue';
 
 export const routes = [
     {
@@ -82,5 +82,10 @@ export const routes = [
     //     path: '/:catchAll(.*)', 
     //     component: NotFound 
     // }
+    {
+        path: '/:pathMatch(.*)',
+        component: NotFound,
+        meta: { hideLayout: true }
 
+    },
 ];

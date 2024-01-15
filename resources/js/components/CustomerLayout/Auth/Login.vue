@@ -32,20 +32,20 @@
   
 <script setup>
 import axios from 'axios';
-import { reactive } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
 const toast = useToast();
 // const isLoading = ref(false)
 
 const router = useRouter();
-const user = reactive({ email: '', password: '' }); // initialize the reactive object with properties
+const user = ref({ email: '', password: '' }); // initialize the reactive object with properties
 
 const handleLogin = async () => {
     // isLoading.value = true;
 
     try {
-        const res = await axios.post('http://localhost:8000/api/user/login', user);
+        const res = await axios.post('http://localhost:8000/api/user/login', user.value);
         
         if(res.data.user.banned){
             toast.error("Your account has been banned!");

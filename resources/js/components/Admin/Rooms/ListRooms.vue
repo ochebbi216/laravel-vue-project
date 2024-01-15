@@ -49,10 +49,8 @@
                           <span v-else class="badge bg-danger" style="color: aliceblue;">No</span>
                         </td>
                         <!-- Boutons pour éditer et supprimer la chambre correspondante -->
-                        <td><button class="btn btn-outline-warning mx-2" @click="editRoom(room.id)"><i
+                        <td ><button v-if="isAvailable(room.id)" class="btn btn-outline-warning mx-2" @click="editRoom(room.id)"><i
                               class="fa-regular fa-pen-to-square"></i> Update</button>
-                          <button class="btn btn-outline-danger mx-2" @click="showDeleteModal(room.id)"> <i
-                              class="fa-regular fa-trash-can"></i> Delete</button>
                         </td>
                       </tr>
                     </tbody>
@@ -147,7 +145,6 @@ const editRoom = (id) => {
 
 // const deleteRoom = async (id) => {
 //   // if (window.confirm("Are You sure ?")) {
-
 //     try {
 //       await axios.delete(`http://localhost:8000/api/rooms/${id}`);
 //       getRooms(); 
