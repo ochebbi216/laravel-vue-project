@@ -38,6 +38,7 @@
                                             <tr v-for="rec in reclamations" :key="rec.id" >
                                                 <td>{{ rec.reservation_id }}</td>
                                                 <td v-if="rec.message.length > 15">{{ rec.message.slice(0, 15) }} ...</td>
+                                                <td v-else >{{ rec.message }}</td>
                                                 <td>
                                                     <span v-if="!rec.status" class="badge bg-danger"
                                                         style="color: aliceblue;">Not readed</span>

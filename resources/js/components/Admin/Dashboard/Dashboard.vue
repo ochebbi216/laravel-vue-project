@@ -186,7 +186,7 @@
 </div></template>
 
 <script setup>
-import Header from "../../../layouts/Header.vue";
+import Header from "../layouts/Header.vue";
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import { useRouter, useRoute } from 'vue-router';

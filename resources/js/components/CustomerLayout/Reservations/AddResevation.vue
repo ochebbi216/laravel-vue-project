@@ -60,8 +60,10 @@
                             <h5 class="card-title text-white mb-2">Amount to be paid: <span class="text-success">{{amount}}</span>  TND</h5>
                         </div>
                         <br>
-                        <div class="form-text rounded bg-light " id="card-element" v-show="show" ></div><!-- dakhel info card -->
-
+                        <div class="form-text rounded bg-light " id="card-element" v-show="show"></div>
+                        <!-- <div v-if="show">
+                        <div  class="form-text rounded bg-light " id="card-element" ></div>
+                        </div> -->
                         <div v-if="show" class="text-center mt-4">
                             <button type="submit"  class="btn btn-primary rounded-pill">&nbsp; Finish <i class="fa-solid fa-arrow-right"></i>&nbsp;</button>
                         </div>

@@ -145,7 +145,7 @@
 							<p class="pt-1"><a @click.prevent="Details(room.id)" class="btn-custom px-3 py-2 rounded">View
 									Details <span class="ion-ios-arrow-forward"></span></a></p>
 							<p class="pt-1">
-								<a href="" @click.prevent="ToReservation()" class="btn-info active px-3 py-2 rounded">Get Room Now! <i
+								<a href="" @click.prevent="ToReservation(room.id)" class="btn-info active px-3 py-2 rounded">Get Room Now! <i
 										class="fa-solid fa-circle-arrow-right"></i></a>
 							</p>
 						</div>
@@ -497,13 +497,10 @@ const getRooms = async () => {
 
 const Details = (id) => {
 	router.push({ name: 'RoomDetails', params: { id } });
-
 };
 
-const ToReservation = () => {
-	// const selectedRoom = rooms.value.find(room => room.id === id_room);
-	router.push({ name: 'AddReservation' });
-	// , params: { roomDetails: selectedRoom }
+const ToReservation = (roomId) => {
+	router.push({ name: 'AddReservation',params:{roomId} });
 }
 function getRoomPrice(type) {
 	switch (type) {

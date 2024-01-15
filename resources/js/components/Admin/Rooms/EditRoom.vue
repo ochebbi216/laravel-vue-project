@@ -54,7 +54,7 @@ import vueFilePond from 'vue-filepond';
 import 'filepond/dist/filepond.min.css';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
-import Header from "../../../layouts/Header.vue";
+import Header from "../layouts/Header.vue";
 
 const FilePond = vueFilePond(FilePondPluginImagePreview);
 const myFiles = ref([]);

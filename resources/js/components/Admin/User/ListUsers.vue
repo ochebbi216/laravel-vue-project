@@ -71,7 +71,7 @@
   
 <script setup>
 import { ref, onMounted } from 'vue';
-import Header from "../../../layouts/Header.vue";
+import Header from "../layouts/Header.vue";
 import axios from 'axios';
 
 const isLoading = ref(true)

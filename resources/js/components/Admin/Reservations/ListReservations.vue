@@ -90,7 +90,7 @@
 <script setup>
 import { ref,onMounted } from 'vue';
 import axios from 'axios';
-import Header from "../../../layouts/Header.vue";
+import Header from "../layouts/Header.vue";
 
 const isLoading = ref(true)
 const reservations = ref([]);

@@ -146,21 +146,16 @@ const fetchReservations = async () => {
 const toggleAvailable = () => {
     onlyAvailable.value = !onlyAvailable.value;
 
-    if (!onlyAvailable.value && selectedCategories.value.includes('available')) {
-        // If Available is unchecked, remove it from the selected categories.
-        selectedCategories.value = selectedCategories.value.filter(c => c !== 'available');
-    } else if (onlyAvailable.value && !selectedCategories.value.includes('available')) {
-        // If Available is checked, ensure to track it in selected categories to maintain the UX consistency.
-        selectedCategories.value.push('available');
-    }
 };
 const getNextAvailableDate = (roomId) => {
     let nextAvailableDate = new Date(); // Start with the current date
 
     for (let reservation of reservations.value.filter(r => r.id_room === roomId)) {
         const checkoutDate = new Date(reservation.checkout);
+        
         if (checkoutDate > nextAvailableDate) {
             nextAvailableDate = checkoutDate;
+            break;
         }
     }
 
@@ -171,20 +166,18 @@ const getNextAvailableDate = (roomId) => {
 };
 
 const filteredRooms = computed(() => {
+    // Filter rooms based on availability. If onlyAvailable is true, include only available rooms.
     let roomsFilteredByAvailability = onlyAvailable.value
-        ? rooms.value.filter(room => isAvailable(room.id))
-        : rooms.value;
+        ? rooms.value.filter(room => isAvailable(room.id)) // Filter rooms by availability
+        : rooms.value; // Include all rooms if not filtering by availability
 
-    if (selectedCategories.value.includes('available')) {
-        // Remove 'available' keyword from room types as it's not a room type
-        selectedCategories.value = selectedCategories.value.filter(category => category !== 'available');
-    }
-
-    // If no categories are selected, or the 'All' option is selected, return rooms based on the availability
+    // If no categories are selected or the 'All' option is selected, return rooms based on the availability filter.
+    // Otherwise, filter the rooms by the selected room types (e.g., Single, Double, Triple, Suite).
     return selectedCategories.value.length === 0
-        ? roomsFilteredByAvailability
-        : roomsFilteredByAvailability.filter(room => selectedCategories.value.includes(room.room_type));
+        ? roomsFilteredByAvailability // Return rooms based on availability if no specific category is selected
+        : roomsFilteredByAvailability.filter(room => selectedCategories.value.includes(room.room_type)); // Further filter rooms by selected room types
 });
+
 const availableRooms = computed(() => {
     return rooms.value;
     // return rooms.value.filter(room => isAvailable(room.id));

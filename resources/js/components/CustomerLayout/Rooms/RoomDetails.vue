@@ -43,23 +43,24 @@
 	    							<li><span>Bed:</span> {{MaxPlaceRoom(room.room_type)}}</li>
 	    						</ul>
     						</div>
-                            <button class="btn btn-primary rounded mx-2">Get This Room Now !</button>
-                        </div>
-
+								<button @click.prevent="ToReservation(room.id)" class="btn btn-primary rounded mx-2">Get This Room Now! 
+                  <i class="fa-solid fa-circle-arrow-right"></i></button>
+                  
+              </div>
           	</div>
           </div> <!-- .col-md-8 -->
           <div class="col-lg-4 sidebar  pl-md-5">
             <div class="sidebar-box ">
               <div class="categories">
                 <h3>Categories</h3>
-                <li><a href="#">Single <span>({{ categories.Single }})</span></a></li>
+                <li><a href="#">Single <span >({{ categories.Single }})</span></a> </li>
                 <li><a href="#">Double <span>({{ categories.Double }})</span></a></li>
                 <li><a href="#">Triple <span>({{ categories.Triple }})</span></a></li>
                 <li><a href="#">Suite <span>({{ categories.Suite }})</span></a></li>
               </div>
             </div>
 
-            <div class="sidebar-box ">
+            <!-- <div class="sidebar-box ">
               <h3>Recent Blog</h3>
               <div class="block-21 mb-4 d-flex">
                 <a class="blog-img mr-4" ></a>
@@ -94,7 +95,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -107,7 +108,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter, useRoute } from 'vue-router';
 const isLoading = ref(true)
-
+const router = useRouter();
 const room = ref(null);
 const categories = ref({
   Single: 0,
@@ -134,13 +135,17 @@ const loadCategoryCounts = async () => {
     for (const cat of cats) {
         try {
             const res = await axios.get(`http://localhost:8000/api/getroomsbycat/${cat}`);
-            categories.value[cat] = res.data.length; 
+            categories.value[cat] = Array.isArray(res.data) ? res.data.length : 0; 
         } catch (err) {
             console.error(err);
+            categories.value[cat] = 0; // Set count to 0 in case of an error
+
         }
     }
 };
-
+const ToReservation = (roomId) => {
+	router.push({ name: 'AddReservation',params:{roomId} });
+}
 function MaxPlaceRoom(type) {
   switch (type) {
     case 'Single':

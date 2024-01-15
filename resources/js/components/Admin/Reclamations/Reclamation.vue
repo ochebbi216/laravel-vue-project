@@ -40,6 +40,7 @@
                                                 <td>{{ rec.reservation_id }}</td>
                                                 <td>{{ rec.user?.name }}</td>
                                                 <td v-if="rec.message.length > 15">{{ rec.message.slice(0, 15) }} ...</td>
+                                                <td v-else >{{ rec.message }}</td>
                                                 <td>
                                                     <span v-if="!rec.status" class="badge bg-danger"
                                                         style="color: aliceblue;">Not readed</span>
@@ -68,7 +69,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import Header from "../../../layouts/Header.vue";
+import Header from "../layouts/Header.vue";
 const router = useRouter();
 
 const isLoading = ref(true)

@@ -60,7 +60,7 @@
 <script setup>
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
-import Header from "../../../layouts/Header.vue";
+import Header from "../layouts/Header.vue";
 
 const bannedUsers = ref([]);
 const isLoading = ref(true)

@@ -62,7 +62,7 @@ import 'filepond/dist/filepond.min.css';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 import { useRouter } from 'vue-router';
-import Header from "../../../layouts/Header.vue";
+import Header from "../layouts/Header.vue";
 
 // Create FilePond component
 const FilePond = vueFilePond(FilePondPluginImagePreview);

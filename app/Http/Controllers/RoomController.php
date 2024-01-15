@@ -27,28 +27,38 @@ class RoomController extends Controller
         $room->save();
         return response()->json($room, 201);
     }
-    public function checkAvailability(Request $request)
-    {
-        $checkIn = $request->checkin;
-        $checkOut = $request->checkout;
-        $roomType = $request->room_type;
+public function checkAvailability(Request $request)
+{
+    $checkIn = $request->checkin;
+    $checkOut = $request->checkout;
+    $roomType = $request->room_type;
 
-        // Logic to get available rooms based on check-in, check-out, and room type
-        $availableRooms = Room::where('room_type', $roomType)
-            ->whereDoesntHave('reservations', function ($query) use ($checkIn, $checkOut) {
-                $query->where(function ($q) use ($checkIn, $checkOut) {
-                    $q->whereBetween('checkin', [$checkIn, $checkOut])
-                        ->orWhereBetween('checkout', [$checkIn, $checkOut])
-                        ->orWhere(function ($q) use ($checkIn, $checkOut) {
-                            $q->where('checkin', '<=', $checkIn)
-                                ->where('checkout', '>=', $checkOut);
-                        });
-                });
-            })
-            ->get();
+    // Fetch all rooms of the specified type
+    $allRooms = Room::where('room_type', $roomType)->get();
 
-        return response()->json(['available_rooms' => $availableRooms]);
-    }
+    // Filter out rooms with conflicting reservations
+    $availableRooms = $allRooms->reject(function ($room) use ($checkIn, $checkOut) {
+        // Check each room for overlapping reservations
+        foreach ($room->reservations as $reservation) {
+            if ($reservation->deleted_at === null && 
+                !($reservation->checkout <= $checkIn || $reservation->checkin >= $checkOut)) {
+                // Conflict found, reject this room
+                return true;
+            }
+        }
+        // No conflicts, keep the room
+        return false;
+    });
+
+    return response()->json(['available_rooms' => $availableRooms]);
+}
+
+    
+
+    
+    
+
+    
     public function getRoomByType($type){
         $rooms = Room::where('room_type', $type)->get();
     

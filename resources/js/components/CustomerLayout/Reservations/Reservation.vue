@@ -46,7 +46,8 @@
                                         <tr class="text-center" v-for="reservation in reservations" :key="reservation.id">
                                             <td>{{ reservation.id }}</td>
                                             <td v-if="reservation.room?.room_number!= null">{{ reservation.room?.room_number }}</td>
-                                            <td v-else class="text-muted">Not Found</td>                                            <td>{{ reservation.checkin }}</td>
+                                            <td v-else class="text-muted">Not Found</td>                                            
+                                            <td>{{ reservation.checkin }}</td>
                                             <td>{{ reservation.checkout }}</td>
                                             <td>{{ reservation.nbadulte }}</td>
                                             <td>{{ reservation.nbenfants }}</td>
@@ -78,7 +79,7 @@
 
                                 </table>
                             </div>
-                            <span class=" text-danger">* If your reservation not confirmed within 12 hours or their status was cancelled or deleted, your money will refunded in 48 hours working days </span>
+                            <span class=" text-danger">* If your reservation not confirmed within 12 hours or their status was cancelled or deleted, your money will refunded in 48 hours </span>
                         </div>
                     </div>
                 </div>

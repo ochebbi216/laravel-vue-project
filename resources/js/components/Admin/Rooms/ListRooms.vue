@@ -89,7 +89,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import Header from "../../../layouts/Header.vue";
+import Header from "../layouts/Header.vue";
 
 const deleteModalVisible = ref(false);
 const selectedRoomId = ref(null);
