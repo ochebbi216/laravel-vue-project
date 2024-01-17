@@ -158,28 +158,7 @@
                             </div>
                         </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12 col-lg-6">
-                        <div class="card card-chart">
-                            <div class="card-header">
-                                <h4 class="card-title">VISITORS</h4>
-                            </div>
-                            <div class="card-body">
-                                <div id="line-chart"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12 col-lg-6">
-                        <div class="card card-chart">
-                            <div class="card-header">
-                                <h4 class="card-title">ROOMS BOOKED</h4>
-                            </div>
-                            <div class="card-body">
-                                <div id="donut-chart"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>
@@ -234,7 +213,8 @@ const fetchReservations = async () => {
         actual_res.value = reservations.value.filter(reservation => {
             const checkinDate = new Date(reservation.checkin);
             const checkoutDate = new Date(reservation.checkout);
-            return checkinDate <= currentDate && checkoutDate >= currentDate;
+            const status = reservation.status;
+            return checkinDate <= currentDate && checkoutDate >= currentDate && status=='confirmed';
         });
     } catch (error) {
         console.error('Error fetching reservations:', error);

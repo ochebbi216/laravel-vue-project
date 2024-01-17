@@ -57,7 +57,7 @@
 
                         <div v-if="show" class="text-center mb-2">
                             <button type="button" @click="openPayment" class="btn btn-primary rounded-pill">&nbsp; Recalculate <i class="fa-solid fa-arrow-right"></i>&nbsp;</button> 
-                            <h5 class="card-title text-white mb-2">Amount to be paid: <span class="text-success">{{amount}}</span>  TND</h5>
+                            <h5 class="card-title text-white mb-2">Amount to be paid: <span class="text-success"><b>{{amount}}</b></span> TND</h5>
                         </div>
                         <br>
                         <div class="form-text rounded bg-light " id="card-element" v-show="show"></div>
@@ -114,15 +114,6 @@ const reservation = ref({
   pension: 'lpd',
 
 });
-// const minCheckinDate = computed(() => {
-//   return tomorrow.toISOString().split('T')[0];
-// });
-
-// const minCheckoutDate = computed(() => {
-//   const checkinDate = new Date(reservation.value.checkin);
-//   checkinDate.setDate(checkinDate.getDate() + 1);
-//   return checkinDate.toISOString().split('T')[0];
-// });
 
 
 const validateOccupancy = () => {
@@ -246,7 +237,7 @@ const addPayment = async () => {
 
     } catch (error) {
         console.error(error);
-        toast.error("Verify form logic please");
+        toast.error("This Room not available between those CheckIn and CheckOut ");
     }
 };
 </script>
