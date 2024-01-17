@@ -14,7 +14,7 @@ class CheckInDate implements Rule
         $today = Carbon::now();
 
         // Check if the checkin date is greater than or equal to today's date
-        return $checkinDate->greaterThanOrEqualTo($today);
+        return $checkinDate->greaterThan($today);
     }
 
     public function message()

@@ -244,12 +244,9 @@ const addPayment = async () => {
         toast.success("Reservation was added successfully");
         router.push('/reservation');
 
-
-
     } catch (error) {
         console.error(error);
         toast.error("Verify form logic please");
-
     }
 };
 </script>

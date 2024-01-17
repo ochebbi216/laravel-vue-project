@@ -24,21 +24,19 @@ class ReservationController extends Controller
     /**
      * Store a newly created reservation in storage.
      */
-    public function isAvailable($checkin, $checkout)
-    {
-            // Convert to Carbon instances to use Carbon's comparison methods
-        $checkinDate = Carbon::parse($checkin);
-        $checkoutDate = Carbon::parse($checkout);
+    // public function isAvailable($checkin, $checkout)
+    // {
+    //     $checkinDate = Carbon::parse($checkin);
+    //     $checkoutDate = Carbon::parse($checkout);
 
-        // Current date and time
-        $currentDate = Carbon::now();
-        if( $checkinDate<$currentDate && $currentDate<$checkoutDate){
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
+    //     $currentDate = Carbon::now();
+    //     if( $checkinDate<$currentDate && $currentDate<$checkoutDate){
+    //         return false;
+    //     }
+    //     else {
+    //         return true;
+    //     }
+    // }
 
     public function store(Request $request)
     {
