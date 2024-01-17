@@ -67,7 +67,7 @@
                                                 <td>{{ reservation.total_cost }} DT</td>
                                                 <td>
                                                     <button v-if="canDeleteReservation(reservation)"
-                                                        @click="deleteReservation(reservation.id)"
+                                                        @click="showDeleteModal(reservation.id)"
                                                         class="btn btn-outline-danger mx-2"><i class="fa-regular fa-trash-can"></i></button>
                                                     <span v-else class="text-danger"><b>Not Dispo </b></span>&nbsp; 
                                                     <button v-if="canDeleteReservation(reservation)" class="btn btn-light veiwbutton"
@@ -85,15 +85,35 @@
             </div>
         </div>
     </div>
+    <div :class="{ 'modal-open': deleteModalVisible }">
+    <div class="modal" :class="{ 'show': deleteModalVisible }">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Delete Reservation</h5>
+            <button type="button" class="btn-close" @click="cancelDelete"></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete this Reservation ?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary " @click="cancelDelete">Cancel</button>
+            <button type="button" class="btn btn-danger " @click="confirmDelete()">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
 import { ref,onMounted } from 'vue';
 import axios from 'axios';
 import Header from "../layouts/Header.vue";
-
+const deleteModalVisible = ref(false);
 const isLoading = ref(true)
 const reservations = ref([]);
+const selectedResId = ref(null);
 
 const completStatusReservation = (res) => {
     const currentDate = new Date();
@@ -141,21 +161,6 @@ const fetchReservations = async () => {
 onMounted(() => {
     fetchReservations();
 });
-const deleteReservation = async (id) => {
-    if (window.confirm("Are You sure ?")) {
-        updateReservationStatus(id, 'deleted');
-
-    await axios.delete(`/api/reservations/${id}`)
-        .then(() => {
-            // Using a filter function to remove the reservation from the list
-            fetchReservations();
-
-        })
-        .catch(error => {
-            console.error('Erreur lors de la suppression de la réservation:', error);
-        });
-    }
-};
 const updateReservationStatus = async (reservationId, status) => {
     await axios.put(`/api/reservations/${reservationId}`, { status })
         .then(() => {
@@ -166,6 +171,33 @@ const updateReservationStatus = async (reservationId, status) => {
             // Handle error appropriately
         });
 };
+const showDeleteModal = (resId) => {
+  selectedResId.value = resId;
+  deleteModalVisible.value = true;
+};
+
+const cancelDelete = () => {
+  deleteModalVisible.value = false;
+};
+
+const confirmDelete = async () => {
+  const resIdToDelete = selectedResId.value;
+
+  if (resIdToDelete) {
+    updateReservationStatus(resIdToDelete, 'deleted');
+
+    try{
+        await axios.delete(`http://localhost:8000/api/reservations/${resIdToDelete}`);
+        fetchReservations();
+        deleteModalVisible.value = false;
+    } catch (error) {
+      fetchReservations();
+      deleteModalVisible.value = false;
+      console.log(error);
+    }
+  }
+};
+
 const saveReservation = async (reservation) => {
     const originalStatus = reservation.status;
     await axios.put(`/api/reservations/${reservation.id}`, { status: reservation.status })
@@ -184,5 +216,59 @@ const saveReservation = async (reservation) => {
 };
 </script>
 <style scoped>
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* z-index: 1000; */
+  justify-content: center;
+  align-items: center;
+}
 
+.modal.show {
+  display: flex;
+}
+
+.modal-dialog {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  max-width: 430px;
+  width: 80%;
+  padding: 20px;
+  position: relative;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.modal-body {
+  margin-bottom: 20px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
 </style>
