@@ -2,7 +2,7 @@
 	<div>
 		<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 			<div class="container">
-				<a class="navbar-brand" href="index.html">Saha<span>Beach</span> </a>
+				<router-link class="navbar-brand" :to="{ name: 'Acceuil' }">Saha<span>Beach</span> </router-link>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
 					aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="oi oi-menu"></span> Menu
@@ -14,7 +14,7 @@
 						<li class="nav-item"><router-link :to="{ name: 'Room' }" class="nav-link" style="font-size: 16px;">Our Rooms</router-link></li>
 						<li class="nav-item"><router-link :to="{ name: 'Reservation' }" class="nav-link" style="font-size: 16px;">Reservations</router-link></li>
 						<li class="nav-item"><router-link :to="{ name: 'Reclamation' }" class="nav-link" style="font-size: 16px;">Complaints</router-link></li>
-						<li class="nav-item"><a href="about.html" class="nav-link" style="font-size: 16px;">About Us</a></li>
+						<li class="nav-item"><a href="#" class="nav-link" style="font-size: 16px;">About Us</a></li>
 
 					</ul>
 					<ul class="navbar-nav float-right" style="margin-left: 10%;">
