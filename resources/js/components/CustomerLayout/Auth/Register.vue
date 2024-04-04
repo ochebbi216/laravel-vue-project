@@ -61,10 +61,11 @@ import { useToast } from 'vue-toastification';
 const toast = useToast();
 const router = useRouter();
 const user = ref({});
+import apiConfig from '../../../apiConfig';
 
 const handleSubmit = async () => {
     try {
-        const response = await axios.post('http://localhost:8000/api/user/register', user.value);
+        const response = await axios.post(`${apiConfig.API_BASE_URL}/user/register`, user.value);
         console.log(response);
         // Assuming that upon successful registration, you want to redirect to the login page.
         router.push({ name: 'Login' });

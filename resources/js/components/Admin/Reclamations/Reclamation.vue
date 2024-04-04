@@ -65,7 +65,7 @@
 </template>
 
 <script setup>
-
+import apiConfig from '../../../apiConfig';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
@@ -80,7 +80,7 @@ const formatDate = (datetime) => {
 };
 
 const fetchReclamations = async () => {
-    await axios.get('http://localhost:8000/api/reclamation')
+    await axios.get(`${apiConfig.API_BASE_URL}/reclamation`)
         .then(res => {
             reclamations.value = res.data;
             isLoading.value = false;
@@ -90,7 +90,7 @@ const fetchReclamations = async () => {
         })
 };
 const updatestatusReclamations = async (id) => {
-    await axios.put(`http://localhost:8000/api/reclamations/${id}`)
+    await axios.put(`${apiConfig.API_BASE_URL}/reclamations/${id}`)
         .then(res => {
             console.log(res);
         })

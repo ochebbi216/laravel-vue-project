@@ -68,6 +68,7 @@ import axios from 'axios';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 const user = ref({});
+import apiConfig from '../../../apiConfig';
 // Immediately attempt to parse the user data from localStorage
 const storedUser = localStorage.getItem('user');
 if (storedUser) {
@@ -83,7 +84,7 @@ const formatDate = (datetime) => {
 };
 
 const fetchReclamations = async () => {
-    await axios.get(`http://localhost:8000/api/reclamationHistory/${id_user}`)
+    await axios.get(`${apiConfig.API_BASE_URL}/reclamationHistory/${id_user}`)
         .then(res => {
             reclamations.value = res.data;
             isLoading.value = false;

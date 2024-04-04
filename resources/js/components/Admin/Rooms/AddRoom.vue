@@ -63,7 +63,7 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 import { useRouter } from 'vue-router';
 import Header from "../layouts/Header.vue";
-
+import apiConfig from '../../../apiConfig';
 // Create FilePond component
 const FilePond = vueFilePond(FilePondPluginImagePreview);
 const myFiles = ref([]);
@@ -80,7 +80,7 @@ const router = useRouter();
 // Methods and logic for adding a room
 const addRoom = async () => {
     try {
-        await axios.post('http://localhost:8000/api/rooms/', room.value);
+        await axios.post(`${apiConfig.API_BASE_URL}/rooms/`, room.value);
         router.push({ name: 'rooms' });
     } catch (error) {
         console.error(error);

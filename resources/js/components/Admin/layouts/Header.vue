@@ -156,6 +156,7 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 import { useToast } from 'vue-toastification';
+import apiConfig from '../../../apiConfig';
 const toast = useToast();
 const router = useRouter();
 const token = ref(localStorage.getItem('admintoken'));
@@ -171,7 +172,7 @@ const reclamations = ref([]);
 
 const logout = async () => {
   try {
-    const response = await axios.post('http://localhost:8000/api/admin/logout', null, {
+    const response = await axios.post(`${apiConfig.API_BASE_URL}/admin/logout`, null, {
       headers: {
         'Authorization': `Bearer ${token.value}`
       }

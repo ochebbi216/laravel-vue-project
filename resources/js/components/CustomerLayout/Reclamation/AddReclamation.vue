@@ -57,7 +57,7 @@ if (storedUser) {
 }
 const id_user = user.value.id
 const id_reservation = route.params.idres;
-
+import apiConfig from '../../../apiConfig';
 const reclamation = ref({
 reservation_id: id_reservation,
 user_id: id_user,
@@ -66,7 +66,7 @@ message: ''
 
 const addReclamation = async () =>{
     try {
-        await axios.post('http://localhost:8000/api/reclamation',reclamation.value)
+        await axios.post(`${apiConfig.API_BASE_URL}/reclamation`,reclamation.value)
         toast.success("Complaint was added successfully");
         router.push('/reclamation');
 

@@ -100,6 +100,7 @@ const reservations = ref([]);
 const user = ref({});
 const currentDate = new Date();
 currentDate.setHours(0, 0, 0, 0);
+import apiConfig from '../../../apiConfig';
 
 const convertToDate = (dateString) => {
   const date = new Date(dateString);
@@ -116,7 +117,7 @@ const showMsj = () =>{
     toast.warning("You can conplain where your CheckIn start");
 } 
 const fetchReservations = async () => {
-    await axios.get(`http://localhost:8000/api/reservationHistory/${id_user}`)
+    await axios.get(`${apiConfig.API_BASE_URL}/reservationHistory/${id_user}`)
         .then(res => {
             reservations.value = res.data;
             isLoading.value = false;

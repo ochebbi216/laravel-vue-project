@@ -61,13 +61,13 @@
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
 import Header from "../layouts/Header.vue";
-
+import apiConfig from '../../../apiConfig';
 const bannedUsers = ref([]);
 const isLoading = ref(true)
 
 const fetchUsers = async () => {
     try {
-        const response = await axios.get('http://localhost:8000/api/users');
+        const response = await axios.get(`${apiConfig.API_BASE_URL}/users`);
         bannedUsers.value = response.data.filter(user => user.banned === 1);
         isLoading.value = false; 
 

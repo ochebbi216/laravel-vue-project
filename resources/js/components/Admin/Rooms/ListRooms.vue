@@ -100,7 +100,7 @@ const reservations = ref([]);
 const router = useRouter();
 
 const getRooms = async () => {
-  await axios.get("http://localhost:8000/api/rooms")
+  await axios.get(`${apiConfig.API_BASE_URL}/api/rooms`)
     .then(res => {
       rooms.value = res.data;
       isLoading.value = false;
@@ -111,7 +111,7 @@ const getRooms = async () => {
     });
 };
 const fetchReservations = async () => {
-  await axios.get('http://localhost:8000/api/reservations')
+  await axios.get(`${apiConfig.API_BASE_URL}/reservations`)
     .then(res => {
       reservations.value = res.data;
     })
@@ -166,7 +166,7 @@ const confirmDelete = async () => {
   
   if (roomIdToDelete) {
     try {
-      await axios.delete(`http://localhost:8000/api/rooms/${roomIdToDelete}`);
+      await axios.delete(`${apiConfig.API_BASE_URL}/rooms/${roomIdToDelete}`);
       getRooms(); // Refresh the list after deletion
       deleteModalVisible.value = false;
     } catch (error) {

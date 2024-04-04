@@ -35,6 +35,8 @@ import axios from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
+import apiConfig from '../../../apiConfig';
+
 const toast = useToast();
 // const isLoading = ref(false)
 
@@ -45,7 +47,7 @@ const handleLogin = async () => {
     // isLoading.value = true;
 
     try {
-        const res = await axios.post('http://localhost:8000/api/user/login', user.value);
+        const res = await axios.post(`${apiConfig.API_BASE_URL}/user/login`, user.value);
         
         if(res.data.user.banned){
             toast.error("Your account has been banned!");

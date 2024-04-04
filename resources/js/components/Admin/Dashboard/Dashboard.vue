@@ -169,6 +169,7 @@ import Header from "../layouts/Header.vue";
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import { useRouter, useRoute } from 'vue-router';
+import apiConfig from '../../../apiConfig';
 const reclamations = ref([]);
 const reservations = ref([]);
 const rooms = ref([]);
@@ -178,7 +179,7 @@ const tot_revenu = ref(0);
 const actual_res = ref([])
 const isLoading = ref(false);
 const fetchReclamations = async () => {
-	await axios.get('http://localhost:8000/api/reclamation')
+	await axios.get(`${apiConfig.API_BASE_URL}/reclamation`)
 		.then(res => {
 			// reclamations.value = res.data.filter(reclamation_reservations => reclamation_reservations.status === 0);
             reclamations.value = res.data;
@@ -188,7 +189,7 @@ const fetchReclamations = async () => {
 		})
 };
 const getRooms = async () => {
-  await axios.get("http://localhost:8000/api/rooms")
+  await axios.get(`${apiConfig.API_BASE_URL}/rooms`)
     .then(res => {
       rooms.value = res.data;
     //   isLoading.value = false; 
@@ -200,7 +201,7 @@ const getRooms = async () => {
 };
 const fetchReservations = async () => {
     try {
-        const res = await axios.get('http://localhost:8000/api/reservations');
+        const res = await axios.get(`${apiConfig.API_BASE_URL}/reservations`);
         reservations.value = res.data;
 
         let totalRevenue = 0;
@@ -222,10 +223,9 @@ const fetchReservations = async () => {
 };
 const fetchUsers = async () => {
     try {
-        const response = await axios.get('http://localhost:8000/api/users');
+        const response = await axios.get(`${apiConfig.API_BASE_URL}/users`);
         users.value = response.data;
         blacklist.value = response.data.filter(users => users.banned === 1);
-
 
     } catch (error) {
         console.error('There was a problem fetching the user list:', error);

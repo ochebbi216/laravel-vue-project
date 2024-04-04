@@ -45,7 +45,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter, useRoute } from 'vue-router';
 import Header from "../layouts/Header.vue";
-
+import apiConfig from '../../../apiConfig';
 const reclamation = ref(null);
 const route = useRoute();
 const isLoading = ref(true)
@@ -55,7 +55,7 @@ const formatDate = (datetime) => {
 };
 const loadReclamationDetails = async () => {
     try {
-        const res = await axios.get(`http://localhost:8000/api/reclamations/${route.params.id}`);
+        const res = await axios.get(`${apiConfig.API_BASE_URL}/reclamations/${route.params.id}`);
         reclamation.value = res.data;
     } catch (err) {
         console.error(err);

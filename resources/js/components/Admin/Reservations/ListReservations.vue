@@ -107,6 +107,7 @@
 </template>
 
 <script setup>
+import apiConfig from '../../../apiConfig';
 import { ref,onMounted } from 'vue';
 import axios from 'axios';
 import Header from "../layouts/Header.vue";
@@ -149,7 +150,7 @@ const canDeleteReservation = (reservation) => {
 };
 
 const fetchReservations = async () => {
-    await axios.get('http://localhost:8000/api/reservations')
+    await axios.get(`${apiConfig.API_BASE_URL}/reservations`)
         .then(res => {
             reservations.value = res.data;
             isLoading.value = false; 
@@ -162,7 +163,7 @@ onMounted(() => {
     fetchReservations();
 });
 const updateReservationStatus = async (reservationId, status) => {
-    await axios.put(`/api/reservations/${reservationId}`, { status })
+    await axios.put(`${apiConfig.API_BASE_URL}/reservations/${reservationId}`, { status })
         .then(() => {
             console.log('Status updated successfully.');
         })
@@ -187,7 +188,7 @@ const confirmDelete = async () => {
     updateReservationStatus(resIdToDelete, 'deleted');
 
     try{
-        await axios.delete(`http://localhost:8000/api/reservations/${resIdToDelete}`);
+        await axios.delete(`${apiConfig.API_BASE_URL}/reservations/${resIdToDelete}`);
         fetchReservations();
         deleteModalVisible.value = false;
     } catch (error) {
@@ -200,7 +201,7 @@ const confirmDelete = async () => {
 
 const saveReservation = async (reservation) => {
     const originalStatus = reservation.status;
-    await axios.put(`/api/reservations/${reservation.id}`, { status: reservation.status })
+    await axios.put(`${apiConfig.API_BASE_URL}/reservations/${reservation.id}`, { status: reservation.status })
         .then(() => {
             console.log('Status updated successfully.');
             window.location.reload(); 

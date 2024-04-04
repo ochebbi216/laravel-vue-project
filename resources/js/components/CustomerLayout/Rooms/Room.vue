@@ -114,6 +114,7 @@ const rooms = ref([]);
 const reservations = ref([]);
 const router = useRouter();
 let show = ref(false);
+import apiConfig from '../../../apiConfig';
 
 const openFilter = () => {
     show.value = !show.value;
@@ -124,7 +125,7 @@ const ToReservation = (id_room) => {
 }
 
 const getRooms = async () => {
-    await axios.get("http://localhost:8000/api/rooms")
+    await axios.get(`${apiConfig.API_BASE_URL}/rooms`)
         .then(res => {
             rooms.value = res.data;
             isLoading.value = false;
@@ -135,7 +136,7 @@ const getRooms = async () => {
         });
 };
 const fetchReservations = async () => {
-    await axios.get('http://localhost:8000/api/reservations')
+    await axios.get(`${apiConfig.API_BASE_URL}/reservations`)
         .then(res => {
             reservations.value = res.data;
         })

@@ -473,6 +473,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import apiConfig from '../../../apiConfig';
 import axios from 'axios';
 const req = ref({});
 const rooms = ref([]);
@@ -483,7 +484,7 @@ const show = ref(false);
 const getRooms = async () => {
 	// isLoading.value = true;
 	try {
-		const response = await axios.get('http://localhost:8000/api/checkAvailability', {
+		const response = await axios.get(`${apiConfig.API_BASE_URL}/checkAvailability`, {
 			params: req.value
 		});
 		// isLoading.value = false;

@@ -110,6 +110,8 @@ import { useRouter, useRoute } from 'vue-router';
 const isLoading = ref(true)
 const router = useRouter();
 const room = ref(null);
+import apiConfig from '../../../apiConfig';
+
 const categories = ref({
   Single: 0,
   Double: 0,
@@ -120,9 +122,8 @@ const route = useRoute();
 
 const loadRoomDetails = async () => {
   isLoading.value = true;
-
     try {
-        const res = await axios.get(`http://localhost:8000/api/rooms/${route.params.id}`);
+        const res = await axios.get(`${apiConfig.API_BASE_URL}/rooms/${route.params.id}`);
         room.value = res.data;
         isLoading.value = false;
     } catch (err) {
@@ -134,7 +135,7 @@ const loadCategoryCounts = async () => {
     const cats = ['Single', 'Double', 'Triple', 'Suite'];
     for (const cat of cats) {
         try {
-            const res = await axios.get(`http://localhost:8000/api/getroomsbycat/${cat}`);
+            const res = await axios.get(`${apiConfig.API_BASE_URL}/getroomsbycat/${cat}`);
             categories.value[cat] = Array.isArray(res.data) ? res.data.length : 0; 
         } catch (err) {
             console.error(err);

@@ -43,6 +43,8 @@
 
 <script setup>
 import { ref, onMounted ,computed} from 'vue';
+import apiConfig from '../../../apiConfig';
+
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 import { useToast } from 'vue-toastification';
@@ -60,7 +62,7 @@ const userName = user.value.name
 
 const logout = async () => {
   try {
-    const response = await axios.post('http://localhost:8000/api/user/logout', null, {
+    const response = await axios.post(`${apiConfig.API_BASE_URL}/user/logout`, null, {
       headers: {
         'Authorization': `Bearer ${token.value}`
       }

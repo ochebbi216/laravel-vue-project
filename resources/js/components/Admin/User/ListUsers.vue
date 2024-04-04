@@ -73,13 +73,13 @@
 import { ref, onMounted } from 'vue';
 import Header from "../layouts/Header.vue";
 import axios from 'axios';
-
+import apiConfig from '../../../apiConfig';
 const isLoading = ref(true)
 const users = ref([]);
 
 const fetchUsers = async () => {
     try {
-        const response = await axios.get('http://localhost:8000/api/users');
+        const response = await axios.get(`${apiConfig.API_BASE_URL}/users`);
         users.value = response.data;
         isLoading.value = false; 
 
@@ -90,7 +90,7 @@ const fetchUsers = async () => {
 
 const toggleBanStatus = async (user) => {
     try {
-        const response = await axios.put(`http://localhost:8000/api/users/${user.id}/toggle-ban`);
+        const response = await axios.put(`${apiConfig.API_BASE_URL}/users/${user.id}/toggle-ban`);
         user.banned = !user.banned;
         console.log(response.data.message);
     } catch (error) {

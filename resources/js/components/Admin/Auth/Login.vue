@@ -35,6 +35,7 @@ import axios from 'axios';
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'vue-toastification';
+import apiConfig from '../../../apiConfig';
 const toast = useToast();
 // const isLoading = ref(false)
 
@@ -43,7 +44,7 @@ const admin = reactive({ email: '', password: '' }); // initialize the reactive 
 
 const handleLogin = async () => {
     try {
-        const res = await axios.post('http://localhost:8000/api/admin/login', admin);
+        const res = await axios.post(`${apiConfig.API_BASE_URL}/admin/login`, admin);
         if (res.data.status) {
             localStorage.setItem('admintoken', res.data.admintoken);
             toast.success(res.data.message);

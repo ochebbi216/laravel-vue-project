@@ -91,6 +91,8 @@ const route = useRoute();
 const show = ref(false);
 const stripe = ref(null);
 const user = ref({});
+import apiConfig from '../../../apiConfig';
+
 // get user data from localStorage
 const storedUser = localStorage.getItem('user');
 if (storedUser) {
@@ -183,7 +185,7 @@ const roomDetails = ref({});
 
 onMounted(async () => {
     try {
-        const response = await axios.get(`http://localhost:8000/api/rooms/${roomId}`);
+        const response = await axios.get(`${apiConfig.API_BASE_URL}/rooms/${roomId}`);
         roomDetails.value = response.data;
         roomType.value = roomDetails.value.room_type; // Assign room type from fetched data
     } catch (error) {
@@ -231,7 +233,7 @@ const addPayment = async () => {
     // }
     try {
         validateOccupancy();
-        await axios.post('http://localhost:8000/api/reservations', reservation.value);
+        await axios.post(`${apiConfig.API_BASE_URL}/reservations`, reservation.value);
         toast.success("Reservation was added successfully");
         router.push('/reservation');
 

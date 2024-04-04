@@ -64,7 +64,7 @@ const room = ref({});
 
 const fetchRoom = async () => {
     try {
-        const res = await axios.get(`http://localhost:8000/api/rooms/${route.params.id}`);
+        const res = await axios.get(`${apiConfig.API_BASE_URL}/rooms/${route.params.id}`);
         room.value = res.data;
     } catch (err) {
         console.error(err);
@@ -73,7 +73,7 @@ const fetchRoom = async () => {
 
 const updateRoom = async () => {
     try {
-        await axios.put(`http://localhost:8000/api/rooms/${route.params.id}`, room.value);
+        await axios.put(`${apiConfig.API_BASE_URL}/rooms/${route.params.id}`, room.value);
         router.push({ name: 'rooms' });
     } catch (err) {
         console.error('Error updating the room:', err);

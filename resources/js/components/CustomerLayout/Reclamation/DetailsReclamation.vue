@@ -88,6 +88,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter, useRoute } from 'vue-router';
+import apiConfig from '../../../apiConfig';
 
 const reclamation = ref(null);
 const route = useRoute();
@@ -98,7 +99,7 @@ return datetime.replace('T', ' ').slice(0, -8);
 };
 const loadReclamationDetails = async () => {
 try {
-    const res = await axios.get(`http://localhost:8000/api/reclamations/${route.params.id}`);
+    const res = await axios.get(`${apiConfig.API_BASE_URL}/reclamations/${route.params.id}`);
     reclamation.value = res.data;
     isLoading.value = false;
 } catch (err) {
